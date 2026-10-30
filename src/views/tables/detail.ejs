@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= table.name %> | Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+  <nav>
+    <strong>🎱 Quản Lý Quán Bi-Da</strong> &nbsp;|&nbsp;
+    <a href="/">Trang chủ</a> |
+    <a href="/tables">Bàn bi-da</a> |
+    <a href="/menu">Thực đơn</a> |
+    <a href="/orders">Order</a> |
+    <a href="/invoices">Hóa đơn</a> |
+    <a href="/shifts">Ca làm</a> |
+    <a href="/revenue">Doanh thu</a>
+  </nav>
+  <%- include('../partials/auth-controls') %>
+  <hr />
+
+  <h1>Chi tiết bàn: <%= table.name %></h1>
+
+  <% if (typeof message !== 'undefined' && message) { %><p><strong>[Thông báo]</strong> <%= message %></p><% } %>
+  <% if (typeof error !== 'undefined' && error) { %><p><strong>[Lỗi]</strong> <%= error %></p><% } %>
+
+  <table border="1" cellpadding="6" cellspacing="0">
+    <tr><th>ID</th><td><%= table.id %></td></tr>
+    <tr><th>Tên bàn</th><td><%= table.name %></td></tr>
+    <tr><th>Giá/giờ</th><td><%= Number(table.price).toLocaleString('vi-VN') %> đ</td></tr>
+    <tr>
+      <th>Trạng thái</th>
+      <td>
+        <% if (table.status === 'AVAILABLE') { %>Sẵn sàng
+        <% } else if (table.status === 'OCCUPIED') { %>🟢 Đang chơi
+        <% } else if (table.status === 'RESERVED') { %>🟡 Đã đặt
+        <% } else { %>🔴 Bảo trì<% } %>
+      </td>
+    </tr>
+    <tr><th>Đang hoạt động</th><td><%= table.isActive ? 'Có' : 'Không' %></td></tr>
+    <tr><th>Bắt đầu chơi</th><td><%= table.startTime ? new Date(table.startTime).toLocaleString('vi-VN') : '—' %></td></tr>
+    <tr><th>Kết thúc gần nhất</th><td><%= table.endTime ? new Date(table.endTime).toLocaleString('vi-VN') : '—' %></td></tr>
+  </table>
+
+  <br />
+
+  <%# ── Thao tác ─────────────────────────────────────────────────────────── %>
+  <% if (table.status === 'AVAILABLE') { %>
+    <form method="POST" action="/orders" style="display:inline">
+      <input type="hidden" name="tableId" value="<%= table.id %>" />
+      <button type="submit">▶ Bắt đầu phiên chơi</button>
+    </form>
+  <% } else if (table.status === 'OCCUPIED') { %>
+    <a href="/orders/table/<%= table.id %>">Xem order đang mở</a>
+  <% } %>
+
+  &nbsp; <a href="/tables/<%= table.id %>/edit">✏ Sửa bàn</a>
+
+  <%# ── Lịch sử order của bàn ───────────────────────────────────────────── %>
+  <% if (orders && orders.length > 0) { %>
+    <h2>Lịch sử phiên chơi</h2>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Order #</th>
+          <th>Bắt đầu</th>
+          <th>Kết thúc</th>
+          <th>Thời gian</th>
+          <th>Tổng tiền</th>
+          <th>Trạng thái</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% orders.forEach(function(o) { %>
+          <tr>
+            <td><a href="/orders/<%= o.id %>">#<%= o.id %></a></td>
+            <td><%= new Date(o.startTime).toLocaleString('vi-VN') %></td>
+            <td><%= o.endTime ? new Date(o.endTime).toLocaleString('vi-VN') : '—' %></td>
+            <td><%= Number(o.durationHours).toFixed(2) %> giờ</td>
+            <td><%= Number(o.totalAmount).toLocaleString('vi-VN') %> đ</td>
+            <td><%= o.status %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p><em>Chưa có lịch sử phiên chơi.</em></p>
+  <% } %>
+
+  <br /><a href="/tables">← Quay lại danh sách bàn</a>
+
+  <hr />
+  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+</body>
+</html>

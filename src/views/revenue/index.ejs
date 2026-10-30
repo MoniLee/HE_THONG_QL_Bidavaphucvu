@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Báo Cáo Doanh Thu | Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+  <nav>
+    <strong>🎱 Quản Lý Quán Bi-Da</strong> &nbsp;|&nbsp;
+    <a href="/">Trang chủ</a> |
+    <a href="/tables">Bàn bi-da</a> |
+    <a href="/menu">Thực đơn</a> |
+    <a href="/orders">Order</a> |
+    <a href="/invoices">Hóa đơn</a> |
+    <a href="/shifts">Ca làm</a> |
+    <a href="/revenue">Doanh thu</a>
+  </nav>
+  <%- include('../partials/auth-controls') %>
+  <hr />
+
+  <h1>Báo Cáo Doanh Thu</h1>
+
+  <%# ── Doanh thu hôm nay ──────────────────────────────────────────────── %>
+  <h2>Hôm nay</h2>
+  <table border="1" cellpadding="6" cellspacing="0">
+    <tr><th>Tổng hóa đơn</th><td><%= today.totalInvoices %></td></tr>
+    <tr><th>Tổng doanh thu</th><td><strong><%= today.totalRevenue.toLocaleString('vi-VN') %> đ</strong></td></tr>
+    <tr><th>Tiền bàn</th><td><%= today.tableRevenue.toLocaleString('vi-VN') %> đ</td></tr>
+    <tr><th>Tiền món</th><td><%= today.itemsRevenue.toLocaleString('vi-VN') %> đ</td></tr>
+    <tr><th>Tổng giảm giá</th><td><%= today.totalDiscount.toLocaleString('vi-VN') %> đ</td></tr>
+    <tr>
+      <th>Theo hình thức</th>
+      <td>
+        Tiền mặt: <%= today.byPaymentMethod.CASH.toLocaleString('vi-VN') %> đ &nbsp;|&nbsp;
+        Chuyển khoản: <%= today.byPaymentMethod.TRANSFER.toLocaleString('vi-VN') %> đ &nbsp;|&nbsp;
+        Thẻ: <%= today.byPaymentMethod.CARD.toLocaleString('vi-VN') %> đ
+      </td>
+    </tr>
+  </table>
+
+  <%# ── Lọc theo tháng ─────────────────────────────────────────────────── %>
+  <h2>Doanh Thu Theo Tháng</h2>
+  <form method="GET" action="/revenue">
+    Tháng:
+    <select name="month">
+      <% for (var m = 1; m <= 12; m++) { %>
+        <option value="<%= m %>" <%= m === currentMonth ? 'selected' : '' %>><%= m %></option>
+      <% } %>
+    </select>
+    Năm:
+    <input type="number" name="year" value="<%= currentYear %>" min="2020" style="width:80px" />
+    <button type="submit">Xem</button>
+  </form>
+  <br />
+
+  <% if (monthly) { %>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <tr><th>Tổng hóa đơn</th><td><%= monthly.totalInvoices %></td></tr>
+      <tr><th>Tổng doanh thu</th><td><strong><%= monthly.totalRevenue.toLocaleString('vi-VN') %> đ</strong></td></tr>
+      <tr><th>Tiền bàn</th><td><%= monthly.tableRevenue.toLocaleString('vi-VN') %> đ</td></tr>
+      <tr><th>Tiền món</th><td><%= monthly.itemsRevenue.toLocaleString('vi-VN') %> đ</td></tr>
+      <tr><th>Tổng giảm giá</th><td><%= monthly.totalDiscount.toLocaleString('vi-VN') %> đ</td></tr>
+      <tr>
+        <th>Theo hình thức</th>
+        <td>
+          Tiền mặt: <%= monthly.byPaymentMethod.CASH.toLocaleString('vi-VN') %> đ &nbsp;|&nbsp;
+          Chuyển khoản: <%= monthly.byPaymentMethod.TRANSFER.toLocaleString('vi-VN') %> đ &nbsp;|&nbsp;
+          Thẻ: <%= monthly.byPaymentMethod.CARD.toLocaleString('vi-VN') %> đ
+        </td>
+      </tr>
+    </table>
+  <% } %>
+
+  <%# ── Doanh thu từng ngày trong tháng ───────────────────────────────── %>
+  <% if (daily && daily.length > 0) { %>
+    <h3>Chi tiết từng ngày — Tháng <%= currentMonth %>/<%= currentYear %></h3>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <thead>
+        <tr><th>Ngày</th><th>Số hóa đơn</th><th>Doanh thu (đ)</th></tr>
+      </thead>
+      <tbody>
+        <% daily.forEach(function(d) { %>
+          <tr>
+            <td><%= d.date %></td>
+            <td><%= d.totalInvoices %></td>
+            <td><%= d.totalRevenue.toLocaleString('vi-VN') %></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p><em>Không có dữ liệu cho tháng này.</em></p>
+  <% } %>
+
+  <%# ── Doanh thu theo ca ────────────────────────────────────────────── %>
+  <h2>Doanh Thu Theo Ca Làm</h2>
+  <% if (shifts && shifts.length > 0) { %>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <thead>
+        <tr><th>Ca</th><th>Nhân viên</th><th>Bắt đầu</th><th>Kết thúc</th><th>Doanh thu</th></tr>
+      </thead>
+      <tbody>
+        <% shifts.forEach(function(s) { %>
+          <tr>
+            <td><a href="/shifts/<%= s.shiftId %>"><%= s.shiftName %></a></td>
+            <td><%= s.staffName %></td>
+            <td><%= new Date(s.startTime).toLocaleString('vi-VN') %></td>
+            <td><%= s.endTime ? new Date(s.endTime).toLocaleString('vi-VN') : '(đang mở)' %></td>
+            <td><%= s.totalRevenue.toLocaleString('vi-VN') %> đ</td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p><em>Chưa có ca làm nào.</em></p>
+  <% } %>
+
+  <hr />
+  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+</body>
+</html>

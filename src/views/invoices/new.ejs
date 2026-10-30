@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lập Hóa Đơn | Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+  <nav>
+    <strong>🎱 Quản Lý Quán Bi-Da</strong> &nbsp;|&nbsp;
+    <a href="/">Trang chủ</a> |
+    <a href="/tables">Bàn bi-da</a> |
+    <a href="/menu">Thực đơn</a> |
+    <a href="/orders">Order</a> |
+    <a href="/invoices">Hóa đơn</a> |
+    <a href="/shifts">Ca làm</a> |
+    <a href="/revenue">Doanh thu</a>
+  </nav>
+  <%- include('../partials/auth-controls') %>
+  <hr />
+
+  <h1>Lập Hóa Đơn Thanh Toán</h1>
+
+  <% if (typeof error !== 'undefined' && error) { %><p><strong>[Lỗi]</strong> <%= error %></p><% } %>
+
+  <%# ── Tóm tắt order ──────────────────────────────────────────────────── %>
+  <h3>Thông tin Order #<%= order.id %></h3>
+  <table border="1" cellpadding="6" cellspacing="0">
+    <tr><th>Bàn</th><td><%= order.table ? order.table.name : '—' %></td></tr>
+    <tr><th>Thời gian chơi</th><td><%= Number(order.durationHours).toFixed(4) %> giờ</td></tr>
+    <tr><th>Tiền bàn</th><td><%= Number(order.tableAmount).toLocaleString('vi-VN') %> đ</td></tr>
+    <tr><th>Tiền món</th><td><%= Number(order.itemsAmount).toLocaleString('vi-VN') %> đ</td></tr>
+    <tr><th>Tạm tính</th><td><strong><%= Number(order.totalAmount).toLocaleString('vi-VN') %> đ</strong></td></tr>
+  </table>
+
+  <%# ── Form thanh toán ────────────────────────────────────────────────── %>
+  <h3>Thông tin thanh toán</h3>
+  <form method="POST" action="/invoices">
+    <input type="hidden" name="orderId" value="<%= order.id %>" />
+
+    <table cellpadding="6">
+      <tr>
+        <td><label for="paymentMethod">Phương thức thanh toán:</label></td>
+        <td>
+          <select id="paymentMethod" name="paymentMethod" required>
+            <option value="CASH">Tiền mặt</option>
+            <option value="TRANSFER">Chuyển khoản</option>
+            <option value="CARD">Thẻ</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="discount">Giảm giá (đ):</label></td>
+        <td>
+          <input type="number" id="discount" name="discount" value="0" min="0" step="1000" />
+          <small>(nhập 0 nếu không giảm)</small>
+        </td>
+      </tr>
+      <% if (openShift) { %>
+        <tr>
+          <td><label for="shiftId">Gán vào ca:</label></td>
+          <td>
+            <select id="shiftId" name="shiftId">
+              <option value="">-- Không gán ca --</option>
+              <option value="<%= openShift.id %>" selected>
+                Ca #<%= openShift.id %>: <%= openShift.name %> (<%= openShift.staffName %>)
+              </option>
+            </select>
+          </td>
+        </tr>
+      <% } %>
+      <tr>
+        <td><label for="note">Ghi chú:</label></td>
+        <td><input type="text" id="note" name="note" placeholder="(tùy chọn)" /></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <button type="submit">Xác nhận thanh toán</button>
+          &nbsp;<a href="/orders/<%= order.id %>">Hủy</a>
+        </td>
+      </tr>
+    </table>
+  </form>
+
+  <hr />
+  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+</body>
+</html>

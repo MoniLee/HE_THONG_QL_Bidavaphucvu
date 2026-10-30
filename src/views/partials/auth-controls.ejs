@@ -1,0 +1,6 @@
+<div style="display:flex;justify-content:flex-end;align-items:center;gap:12px;padding:8px 0">
+  <span>Xin chào, <strong><%= currentUser.fullName %></strong> · <%= currentUser.role %></span>
+  <form method="POST" action="/auth/logout" style="margin:0">
+    <button type="submit">Đăng xuất</button>
+  </form>
+</div>

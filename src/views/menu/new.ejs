@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thêm Món Mới | Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+  <nav>
+    <strong>🎱 Quản Lý Quán Bi-Da</strong> &nbsp;|&nbsp;
+    <a href="/">Trang chủ</a> |
+    <a href="/tables">Bàn bi-da</a> |
+    <a href="/menu">Thực đơn</a> |
+    <a href="/orders">Order</a> |
+    <a href="/invoices">Hóa đơn</a> |
+    <a href="/shifts">Ca làm</a> |
+    <a href="/revenue">Doanh thu</a>
+  </nav>
+  <%- include('../partials/auth-controls') %>
+  <hr />
+
+  <h1>Thêm Món Mới</h1>
+
+  <% if (typeof error !== 'undefined' && error) { %><p><strong>[Lỗi]</strong> <%= error %></p><% } %>
+
+  <form method="POST" action="/menu">
+    <table cellpadding="6">
+      <tr>
+        <td><label for="name">Tên món:</label></td>
+        <td><input type="text" id="name" name="name" required placeholder="VD: Nước ngọt Coca" value="<%= typeof formData !== 'undefined' ? formData.name : '' %>" /></td>
+      </tr>
+      <tr>
+        <td><label for="category">Danh mục:</label></td>
+        <td>
+          <select id="category" name="category" required>
+            <option value="FOOD"  <%= typeof formData !== 'undefined' && formData.category === 'FOOD'  ? 'selected' : '' %>>Đồ ăn</option>
+            <option value="DRINK" <%= typeof formData !== 'undefined' && formData.category === 'DRINK' ? 'selected' : '' %>>Nước uống</option>
+            <option value="OTHER" <%= typeof formData !== 'undefined' && formData.category === 'OTHER' ? 'selected' : '' %>>Khác</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="price">Giá (đ):</label></td>
+        <td><input type="number" id="price" name="price" required min="0" step="1000" placeholder="VD: 15000" value="<%= typeof formData !== 'undefined' ? formData.price : '' %>" /></td>
+      </tr>
+      <tr>
+        <td><label for="description">Mô tả:</label></td>
+        <td><input type="text" id="description" name="description" placeholder="(tùy chọn)" value="<%= typeof formData !== 'undefined' ? formData.description : '' %>" /></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <button type="submit">Thêm món</button>
+          &nbsp;<a href="/menu">Hủy</a>
+        </td>
+      </tr>
+    </table>
+  </form>
+
+  <hr />
+  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+</body>
+</html>

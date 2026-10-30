@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ca Làm | Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+  <nav>
+    <strong>🎱 Quản Lý Quán Bi-Da</strong> &nbsp;|&nbsp;
+    <a href="/">Trang chủ</a> |
+    <a href="/tables">Bàn bi-da</a> |
+    <a href="/menu">Thực đơn</a> |
+    <a href="/orders">Order</a> |
+    <a href="/invoices">Hóa đơn</a> |
+    <a href="/shifts">Ca làm</a> |
+    <a href="/revenue">Doanh thu</a>
+  </nav>
+  <%- include('../partials/auth-controls') %>
+  <hr />
+
+  <h1>Quản Lý Ca Làm</h1>
+
+  <% if (typeof message !== 'undefined' && message) { %><p><strong>[Thông báo]</strong> <%= message %></p><% } %>
+  <% if (typeof error !== 'undefined' && error) { %><p><strong>[Lỗi]</strong> <%= error %></p><% } %>
+
+  <%# ── Ca đang mở ─────────────────────────────────────────────────────── %>
+  <% if (openShift) { %>
+    <p>
+      Ca đang mở: <strong><%= openShift.name %></strong>
+      (NV: <%= openShift.staffName %>, bắt đầu: <%= new Date(openShift.startTime).toLocaleString('vi-VN') %>)
+      &nbsp;
+      <form method="POST" action="/shifts/<%= openShift.id %>/close" style="display:inline">
+        <button type="submit" onclick="return confirm('Đóng ca làm này?')">Đóng ca</button>
+      </form>
+    </p>
+  <% } else { %>
+    <a href="/shifts/new">+ Mở ca mới</a>
+  <% } %>
+
+  <br />
+
+  <% if (shifts && shifts.length > 0) { %>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tên ca</th>
+          <th>Nhân viên</th>
+          <th>Bắt đầu</th>
+          <th>Kết thúc</th>
+          <th>Doanh thu</th>
+          <th>Trạng thái</th>
+          <th>Chi tiết</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% shifts.forEach(function(shift) { %>
+          <tr>
+            <td><%= shift.id %></td>
+            <td><%= shift.name %></td>
+            <td><%= shift.staffName %></td>
+            <td><%= new Date(shift.startTime).toLocaleString('vi-VN') %></td>
+            <td><%= shift.endTime ? new Date(shift.endTime).toLocaleString('vi-VN') : '(đang mở)' %></td>
+            <td><%= Number(shift.totalRevenue).toLocaleString('vi-VN') %> đ</td>
+            <td>
+              <% if (shift.status === 'OPEN') { %>🟢 Đang mở
+              <% } else { %>⬜ Đã đóng<% } %>
+            </td>
+            <td><a href="/shifts/<%= shift.id %>">Xem</a></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>Chưa có ca làm nào.</p>
+  <% } %>
+
+  <hr />
+  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+</body>
+</html>

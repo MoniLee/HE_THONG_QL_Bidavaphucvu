@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sửa Món | Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+  <nav>
+    <strong>🎱 Quản Lý Quán Bi-Da</strong> &nbsp;|&nbsp;
+    <a href="/">Trang chủ</a> |
+    <a href="/tables">Bàn bi-da</a> |
+    <a href="/menu">Thực đơn</a> |
+    <a href="/orders">Order</a> |
+    <a href="/invoices">Hóa đơn</a> |
+    <a href="/shifts">Ca làm</a> |
+    <a href="/revenue">Doanh thu</a>
+  </nav>
+  <%- include('../partials/auth-controls') %>
+  <hr />
+
+  <h1>Sửa Món: <%= item.name %></h1>
+
+  <% if (typeof error !== 'undefined' && error) { %><p><strong>[Lỗi]</strong> <%= error %></p><% } %>
+
+  <form method="POST" action="/menu/<%= item.id %>/update">
+    <table cellpadding="6">
+      <tr>
+        <td><label for="name">Tên món:</label></td>
+        <td><input type="text" id="name" name="name" required value="<%= item.name %>" /></td>
+      </tr>
+      <tr>
+        <td><label for="category">Danh mục:</label></td>
+        <td>
+          <select id="category" name="category" required>
+            <option value="FOOD"  <%= item.category === 'FOOD'  ? 'selected' : '' %>>Đồ ăn</option>
+            <option value="DRINK" <%= item.category === 'DRINK' ? 'selected' : '' %>>Nước uống</option>
+            <option value="OTHER" <%= item.category === 'OTHER' ? 'selected' : '' %>>Khác</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td><label for="price">Giá (đ):</label></td>
+        <td><input type="number" id="price" name="price" required min="0" step="1000" value="<%= Number(item.price) %>" /></td>
+      </tr>
+      <tr>
+        <td><label for="description">Mô tả:</label></td>
+        <td><input type="text" id="description" name="description" value="<%= item.description || '' %>" /></td>
+      </tr>
+      <tr>
+        <td><label for="isAvailable">Còn bán:</label></td>
+        <td>
+          <select id="isAvailable" name="isAvailable">
+            <option value="true"  <%= item.isAvailable ? 'selected' : '' %>>Có</option>
+            <option value="false" <%= !item.isAvailable ? 'selected' : '' %>>Ngừng bán</option>
+          </select>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <button type="submit">Lưu thay đổi</button>
+          &nbsp;<a href="/menu">Hủy</a>
+        </td>
+      </tr>
+    </table>
+  </form>
+
+  <hr />
+  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+</body>
+</html>

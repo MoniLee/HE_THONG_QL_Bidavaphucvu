@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Danh Sách Order | Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+  <nav>
+    <strong>🎱 Quản Lý Quán Bi-Da</strong> &nbsp;|&nbsp;
+    <a href="/">Trang chủ</a> |
+    <a href="/tables">Bàn bi-da</a> |
+    <a href="/menu">Thực đơn</a> |
+    <a href="/orders">Order</a> |
+    <a href="/invoices">Hóa đơn</a> |
+    <a href="/shifts">Ca làm</a> |
+    <a href="/revenue">Doanh thu</a>
+  </nav>
+  <%- include('../partials/auth-controls') %>
+  <hr />
+
+  <h1>Danh Sách Order</h1>
+
+  <% if (typeof message !== 'undefined' && message) { %><p><strong>[Thông báo]</strong> <%= message %></p><% } %>
+  <% if (typeof error !== 'undefined' && error) { %><p><strong>[Lỗi]</strong> <%= error %></p><% } %>
+
+  <%# Lọc nhanh theo trạng thái %>
+  <a href="/orders">Tất cả</a> |
+  <a href="/orders?status=OPEN">Đang mở</a> |
+  <a href="/orders?status=BILLED">Đã tính tiền</a> |
+  <a href="/orders?status=CANCELLED">Đã hủy</a>
+  <br /><br />
+
+  <% if (orders && orders.length > 0) { %>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Order #</th>
+          <th>Bàn</th>
+          <th>Bắt đầu</th>
+          <th>Kết thúc</th>
+          <th>Thời gian</th>
+          <th>Tiền bàn</th>
+          <th>Tiền món</th>
+          <th>Tổng tiền</th>
+          <th>Trạng thái</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% orders.forEach(function(order) { %>
+          <tr>
+            <td><a href="/orders/<%= order.id %>">#<%= order.id %></a></td>
+            <td><%= order.table ? order.table.name : '—' %></td>
+            <td><%= new Date(order.startTime).toLocaleString('vi-VN') %></td>
+            <td><%= order.endTime ? new Date(order.endTime).toLocaleString('vi-VN') : '—' %></td>
+            <td><%= Number(order.durationHours).toFixed(2) %> giờ</td>
+            <td><%= Number(order.tableAmount).toLocaleString('vi-VN') %> đ</td>
+            <td><%= Number(order.itemsAmount).toLocaleString('vi-VN') %> đ</td>
+            <td><strong><%= Number(order.totalAmount).toLocaleString('vi-VN') %> đ</strong></td>
+            <td>
+              <% if (order.status === 'OPEN') { %>🟢 Đang mở
+              <% } else if (order.status === 'BILLED') { %>✅ Đã thanh toán
+              <% } else { %>❌ Đã hủy<% } %>
+            </td>
+            <td>
+              <a href="/orders/<%= order.id %>">Chi tiết</a>
+              <% if (order.status === 'OPEN') { %>
+                | <a href="/orders/<%= order.id %>/add-items">+ Gọi món</a>
+                | <form method="POST" action="/orders/<%= order.id %>/close" style="display:inline">
+                    <button type="submit" onclick="return confirm('Kết thúc phiên chơi order #<%= order.id %>?')">Kết thúc</button>
+                  </form>
+              <% } %>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>Không có order nào.</p>
+  <% } %>
+
+  <hr />
+  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+</body>
+</html>

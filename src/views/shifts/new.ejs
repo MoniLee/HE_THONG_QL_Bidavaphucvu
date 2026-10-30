@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mở Ca Mới | Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+  <nav>
+    <strong>🎱 Quản Lý Quán Bi-Da</strong> &nbsp;|&nbsp;
+    <a href="/">Trang chủ</a> |
+    <a href="/tables">Bàn bi-da</a> |
+    <a href="/menu">Thực đơn</a> |
+    <a href="/orders">Order</a> |
+    <a href="/invoices">Hóa đơn</a> |
+    <a href="/shifts">Ca làm</a> |
+    <a href="/revenue">Doanh thu</a>
+  </nav>
+  <%- include('../partials/auth-controls') %>
+  <hr />
+
+  <h1>Mở Ca Làm Mới</h1>
+
+  <% if (typeof error !== 'undefined' && error) { %><p><strong>[Lỗi]</strong> <%= error %></p><% } %>
+
+  <form method="POST" action="/shifts">
+    <table cellpadding="6">
+      <tr>
+        <td><label for="name">Tên ca:</label></td>
+        <td>
+          <input type="text" id="name" name="name" required
+            placeholder="VD: Ca sáng 01/11/2026"
+            value="<%= typeof formData !== 'undefined' ? formData.name : '' %>" />
+        </td>
+      </tr>
+      <tr>
+        <td><label for="staffName">Tên nhân viên trực:</label></td>
+        <td>
+          <input type="text" id="staffName" name="staffName" required
+            placeholder="VD: Nguyễn Văn A"
+            value="<%= typeof formData !== 'undefined' ? formData.staffName : '' %>" />
+        </td>
+      </tr>
+      <tr>
+        <td><label for="note">Ghi chú:</label></td>
+        <td><input type="text" id="note" name="note" placeholder="(tùy chọn)" /></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <button type="submit">Mở ca</button>
+          &nbsp;<a href="/shifts">Hủy</a>
+        </td>
+      </tr>
+    </table>
+  </form>
+
+  <hr />
+  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+</body>
+</html>

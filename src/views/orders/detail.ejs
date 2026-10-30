@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Order #<%= order.id %> | Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+  <nav>
+    <strong>🎱 Quản Lý Quán Bi-Da</strong> &nbsp;|&nbsp;
+    <a href="/">Trang chủ</a> |
+    <a href="/tables">Bàn bi-da</a> |
+    <a href="/menu">Thực đơn</a> |
+    <a href="/orders">Order</a> |
+    <a href="/invoices">Hóa đơn</a> |
+    <a href="/shifts">Ca làm</a> |
+    <a href="/revenue">Doanh thu</a>
+  </nav>
+  <%- include('../partials/auth-controls') %>
+  <hr />
+
+  <h1>Order #<%= order.id %> — <%= order.table ? order.table.name : 'N/A' %></h1>
+
+  <% if (typeof message !== 'undefined' && message) { %><p><strong>[Thông báo]</strong> <%= message %></p><% } %>
+  <% if (typeof error !== 'undefined' && error) { %><p><strong>[Lỗi]</strong> <%= error %></p><% } %>
+
+  <%# ── Thông tin chung ─────────────────────────────────────────────────── %>
+  <table border="1" cellpadding="6" cellspacing="0">
+    <tr><th>Bàn</th><td><%= order.table ? order.table.name : '—' %></td></tr>
+    <tr><th>Trạng thái</th>
+      <td>
+        <% if (order.status === 'OPEN') { %>🟢 Đang mở
+        <% } else if (order.status === 'BILLED') { %>✅ Đã thanh toán
+        <% } else { %>❌ Đã hủy<% } %>
+      </td>
+    </tr>
+    <tr><th>Bắt đầu</th><td><%= new Date(order.startTime).toLocaleString('vi-VN') %></td></tr>
+    <tr><th>Kết thúc</th><td><%= order.endTime ? new Date(order.endTime).toLocaleString('vi-VN') : '(chưa kết thúc)' %></td></tr>
+    <tr><th>Thời gian chơi</th><td><%= Number(order.durationHours).toFixed(4) %> giờ</td></tr>
+    <tr><th>Tiền bàn</th><td><%= Number(order.tableAmount).toLocaleString('vi-VN') %> đ</td></tr>
+    <tr><th>Tiền món</th><td><%= Number(order.itemsAmount).toLocaleString('vi-VN') %> đ</td></tr>
+    <tr><th>Tổng cộng</th><td><strong><%= Number(order.totalAmount).toLocaleString('vi-VN') %> đ</strong></td></tr>
+    <% if (order.note) { %><tr><th>Ghi chú</th><td><%= order.note %></td></tr><% } %>
+  </table>
+
+  <br />
+
+  <%# ── Thao tác ─────────────────────────────────────────────────────────── %>
+  <% if (order.status === 'OPEN') { %>
+    <a href="/orders/<%= order.id %>/add-items">+ Gọi thêm món</a>
+    &nbsp;
+    <a href="/orders/<%= order.id %>/preview-bill">Xem hóa đơn tạm tính</a>
+    &nbsp;
+    <form method="POST" action="/orders/<%= order.id %>/close" style="display:inline">
+      <button type="submit" onclick="return confirm('Kết thúc phiên chơi?')">Kết thúc phiên chơi</button>
+    </form>
+    &nbsp;
+    <form method="POST" action="/orders/<%= order.id %>/cancel" style="display:inline">
+      <button type="submit" onclick="return confirm('Hủy order này?')">Hủy order</button>
+    </form>
+  <% } else if (order.status === 'BILLED' && !order.invoice) { %>
+    <a href="/invoices/new?orderId=<%= order.id %>">Lập hóa đơn thanh toán</a>
+  <% } %>
+
+  <%# ── Danh sách món đã gọi ────────────────────────────────────────────── %>
+  <h2>Danh sách món đã gọi</h2>
+  <% if (order.items && order.items.length > 0) { %>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>Tên món</th>
+          <th>Số lượng</th>
+          <th>Đơn giá (đ)</th>
+          <th>Thành tiền (đ)</th>
+          <th>Ghi chú</th>
+          <% if (order.status === 'OPEN') { %><th>Xóa</th><% } %>
+        </tr>
+      </thead>
+      <tbody>
+        <% order.items.forEach(function(item, idx) { %>
+          <tr>
+            <td><%= idx + 1 %></td>
+            <td><%= item.menuItem ? item.menuItem.name : '(đã xóa)' %></td>
+            <td><%= item.quantity %></td>
+            <td><%= Number(item.unitPrice).toLocaleString('vi-VN') %></td>
+            <td><%= Number(item.subtotal).toLocaleString('vi-VN') %></td>
+            <td><%= item.note || '—' %></td>
+            <% if (order.status === 'OPEN') { %>
+              <td>
+                <form method="POST" action="/orders/<%= order.id %>/items/<%= item.id %>/delete" style="display:inline">
+                  <button type="submit" onclick="return confirm('Xóa món này?')">Xóa</button>
+                </form>
+              </td>
+            <% } %>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p><em>Chưa gọi món nào.</em>
+      <% if (order.status === 'OPEN') { %>
+        <a href="/orders/<%= order.id %>/add-items">+ Gọi món</a>
+      <% } %>
+    </p>
+  <% } %>
+
+  <br /><a href="/orders">← Quay lại danh sách</a>
+
+  <hr />
+  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+</body>
+</html>

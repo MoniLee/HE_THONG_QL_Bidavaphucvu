@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ca #<%= shift.id %> | Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+  <nav>
+    <strong>🎱 Quản Lý Quán Bi-Da</strong> &nbsp;|&nbsp;
+    <a href="/">Trang chủ</a> |
+    <a href="/tables">Bàn bi-da</a> |
+    <a href="/menu">Thực đơn</a> |
+    <a href="/orders">Order</a> |
+    <a href="/invoices">Hóa đơn</a> |
+    <a href="/shifts">Ca làm</a> |
+    <a href="/revenue">Doanh thu</a>
+  </nav>
+  <%- include('../partials/auth-controls') %>
+  <hr />
+
+  <h1>Chi Tiết Ca Làm #<%= shift.id %>: <%= shift.name %></h1>
+
+  <table border="1" cellpadding="6" cellspacing="0">
+    <tr><th>Nhân viên</th><td><%= shift.staffName %></td></tr>
+    <tr><th>Bắt đầu</th><td><%= new Date(shift.startTime).toLocaleString('vi-VN') %></td></tr>
+    <tr><th>Kết thúc</th><td><%= shift.endTime ? new Date(shift.endTime).toLocaleString('vi-VN') : '(đang mở)' %></td></tr>
+    <tr><th>Thời gian</th><td><%= summary.duration %></td></tr>
+    <tr><th>Tổng doanh thu</th><td><strong><%= summary.totalRevenue.toLocaleString('vi-VN') %> đ</strong></td></tr>
+    <tr><th>Trạng thái</th><td><%= shift.status === 'OPEN' ? '🟢 Đang mở' : '⬜ Đã đóng' %></td></tr>
+    <% if (shift.note) { %><tr><th>Ghi chú</th><td><%= shift.note %></td></tr><% } %>
+  </table>
+
+  <% if (shift.status === 'OPEN') { %>
+    <br />
+    <form method="POST" action="/shifts/<%= shift.id %>/close" style="display:inline">
+      <button type="submit" onclick="return confirm('Đóng ca này?')">Đóng ca</button>
+    </form>
+  <% } %>
+
+  <%# ── Danh sách hóa đơn trong ca ──────────────────────────────────────── %>
+  <h2>Hóa đơn trong ca</h2>
+  <% if (invoices && invoices.length > 0) { %>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Hóa đơn #</th>
+          <th>Bàn</th>
+          <th>Thời gian</th>
+          <th>Tổng tiền</th>
+          <th>Thanh toán</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% invoices.forEach(function(inv) { %>
+          <tr>
+            <td><a href="/invoices/<%= inv.id %>">#<%= inv.id %></a></td>
+            <td><%= inv.table ? inv.table.name : '—' %></td>
+            <td><%= new Date(inv.issuedAt).toLocaleString('vi-VN') %></td>
+            <td><%= Number(inv.totalAmount).toLocaleString('vi-VN') %> đ</td>
+            <td>
+              <% if (inv.paymentMethod === 'CASH') { %>Tiền mặt
+              <% } else if (inv.paymentMethod === 'TRANSFER') { %>Chuyển khoản
+              <% } else { %>Thẻ<% } %>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p><em>Chưa có hóa đơn nào trong ca này.</em></p>
+  <% } %>
+
+  <br /><a href="/shifts">← Quay lại danh sách ca</a>
+
+  <hr />
+  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+</body>
+</html>

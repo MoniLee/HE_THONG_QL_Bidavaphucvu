@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thực Đơn | Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+  <nav>
+    <strong>🎱 Quản Lý Quán Bi-Da</strong> &nbsp;|&nbsp;
+    <a href="/">Trang chủ</a> |
+    <a href="/tables">Bàn bi-da</a> |
+    <a href="/menu">Thực đơn</a> |
+    <a href="/orders">Order</a> |
+    <a href="/invoices">Hóa đơn</a> |
+    <a href="/shifts">Ca làm</a> |
+    <a href="/revenue">Doanh thu</a>
+  </nav>
+  <%- include('../partials/auth-controls') %>
+  <hr />
+
+  <h1>Quản Lý Thực Đơn</h1>
+
+  <% if (typeof message !== 'undefined' && message) { %><p><strong>[Thông báo]</strong> <%= message %></p><% } %>
+  <% if (typeof error !== 'undefined' && error) { %><p><strong>[Lỗi]</strong> <%= error %></p><% } %>
+
+  <a href="/menu/new">+ Thêm món mới</a>
+  <br /><br />
+
+  <%# ── Lọc theo danh mục ───────────────────────────────────────────────── %>
+  <form method="GET" action="/menu">
+    Lọc danh mục:
+    <select name="category" onchange="this.form.submit()">
+      <option value="">-- Tất cả --</option>
+      <option value="FOOD"  <%= typeof currentCategory !== 'undefined' && currentCategory === 'FOOD'  ? 'selected' : '' %>>Đồ ăn</option>
+      <option value="DRINK" <%= typeof currentCategory !== 'undefined' && currentCategory === 'DRINK' ? 'selected' : '' %>>Nước uống</option>
+      <option value="OTHER" <%= typeof currentCategory !== 'undefined' && currentCategory === 'OTHER' ? 'selected' : '' %>>Khác</option>
+    </select>
+  </form>
+  <br />
+
+  <% if (items && items.length > 0) { %>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tên món</th>
+          <th>Danh mục</th>
+          <th>Giá (đ)</th>
+          <th>Mô tả</th>
+          <th>Còn bán</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% items.forEach(function(item) { %>
+          <tr>
+            <td><%= item.id %></td>
+            <td><%= item.name %></td>
+            <td>
+              <% if (item.category === 'FOOD') { %>Đồ ăn
+              <% } else if (item.category === 'DRINK') { %>Nước uống
+              <% } else { %>Khác<% } %>
+            </td>
+            <td><%= Number(item.price).toLocaleString('vi-VN') %></td>
+            <td><%= item.description || '—' %></td>
+            <td><%= item.isAvailable ? 'Có' : 'Ngừng bán' %></td>
+            <td>
+              <a href="/menu/<%= item.id %>/edit">Sửa</a> |
+              <form method="POST" action="/menu/<%= item.id %>/delete" style="display:inline">
+                <button type="submit" onclick="return confirm('Xóa món <%= item.name %>?')">Xóa</button>
+              </form>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>Chưa có món nào. <a href="/menu/new">Thêm món ngay</a>.</p>
+  <% } %>
+
+  <hr />
+  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+</body>
+</html>

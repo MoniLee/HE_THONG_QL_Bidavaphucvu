@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quản Lý Bàn | Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+  <nav>
+    <strong>🎱 Quản Lý Quán Bi-Da</strong> &nbsp;|&nbsp;
+    <a href="/">Trang chủ</a> |
+    <a href="/tables">Bàn bi-da</a> |
+    <a href="/menu">Thực đơn</a> |
+    <a href="/orders">Order</a> |
+    <a href="/invoices">Hóa đơn</a> |
+    <a href="/shifts">Ca làm</a> |
+    <a href="/revenue">Doanh thu</a>
+  </nav>
+  <%- include('../partials/auth-controls') %>
+  <hr />
+
+  <h1>Quản Lý Bàn Bi-Da</h1>
+
+  <% if (typeof message !== 'undefined' && message) { %><p><strong>[Thông báo]</strong> <%= message %></p><% } %>
+  <% if (typeof error !== 'undefined' && error) { %><p><strong>[Lỗi]</strong> <%= error %></p><% } %>
+
+  <a href="/tables/new">+ Thêm bàn mới</a>
+  <br /><br />
+
+  <% if (tables && tables.length > 0) { %>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Tên bàn</th>
+          <th>Giá/giờ (đ)</th>
+          <th>Trạng thái</th>
+          <th>Đang chơi</th>
+          <th>Bắt đầu</th>
+          <th>Thao tác</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% tables.forEach(function(table) { %>
+          <tr>
+            <td><%= table.id %></td>
+            <td><a href="/tables/<%= table.id %>"><%= table.name %></a></td>
+            <td><%= Number(table.price).toLocaleString('vi-VN') %></td>
+            <td>
+              <% if (table.status === 'AVAILABLE') { %>Sẵn sàng
+              <% } else if (table.status === 'OCCUPIED') { %>🟢 Đang chơi
+              <% } else if (table.status === 'RESERVED') { %>🟡 Đã đặt
+              <% } else { %>🔴 Bảo trì<% } %>
+            </td>
+            <td><%= table.isActive ? 'Có' : 'Không' %></td>
+            <td><%= table.startTime ? new Date(table.startTime).toLocaleString('vi-VN') : '—' %></td>
+            <td>
+              <a href="/tables/<%= table.id %>">Chi tiết</a> |
+              <a href="/tables/<%= table.id %>/edit">Sửa</a> |
+              <% if (!table.isActive) { %>
+                <form method="POST" action="/tables/<%= table.id %>/delete" style="display:inline">
+                  <button type="submit" onclick="return confirm('Xóa bàn <%= table.name %>?')">Xóa</button>
+                </form>
+              <% } else { %>
+                <span title="Đang chơi, không thể xóa">[Đang dùng]</span>
+              <% } %>
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>Chưa có bàn nào. <a href="/tables/new">Thêm bàn ngay</a>.</p>
+  <% } %>
+
+  <hr />
+  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+</body>
+</html>

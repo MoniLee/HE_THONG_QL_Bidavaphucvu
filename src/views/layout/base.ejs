@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= typeof title !== 'undefined' ? title + ' | ' : '' %>Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+
+  <%# ── Thanh điều hướng ──────────────────────────────────────────────── %>
+  <nav>
+    <strong>🎱 Quản Lý Quán Bi-Da</strong>
+    &nbsp;|&nbsp;
+    <a href="/">Trang chủ</a> |
+    <a href="/tables">Bàn bi-da</a> |
+    <a href="/menu">Thực đơn</a> |
+    <a href="/orders">Order</a> |
+    <a href="/invoices">Hóa đơn</a> |
+    <a href="/shifts">Ca làm</a> |
+    <a href="/revenue">Doanh thu</a>
+  </nav>
+  <%- include('../partials/auth-controls') %>
+
+  <hr />
+
+  <%# ── Tiêu đề trang ─────────────────────────────────────────────────── %>
+  <% if (typeof title !== 'undefined') { %>
+    <h1><%= title %></h1>
+  <% } %>
+
+  <%# ── Thông báo lỗi / thành công (flash message đơn giản qua query) ── %>
+  <% if (typeof message !== 'undefined' && message) { %>
+    <p><strong>[Thông báo]</strong> <%= message %></p>
+  <% } %>
+  <% if (typeof error !== 'undefined' && error) { %>
+    <p><strong>[Lỗi]</strong> <%= error %></p>
+  <% } %>
+
+  <%# ── Nội dung từng trang chèn vào đây ─────────────────────────────── %>
+  <%- body %>
+
+  <hr />
+  <footer>
+    <small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small>
+  </footer>
+
+</body>
+</html>

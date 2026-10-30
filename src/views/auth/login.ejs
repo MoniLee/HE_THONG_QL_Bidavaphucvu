@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đăng Nhập | Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+  <h1>🎱 Quản Lý Quán Bi-Da</h1>
+  <h2>Đăng Nhập</h2>
+
+  <% if (typeof error !== 'undefined' && error) { %>
+    <p><strong>[Lỗi]</strong> <%= error %></p>
+  <% } %>
+
+  <form method="POST" action="/auth/login">
+    <% if (typeof returnTo !== 'undefined' && returnTo) { %>
+      <input type="hidden" name="returnTo" value="<%= returnTo %>" />
+    <% } %>
+    <table cellpadding="6">
+      <tr>
+        <td><label for="email">Email:</label></td>
+        <td><input type="email" id="email" name="email" required placeholder="admin@example.com" /></td>
+      </tr>
+      <tr>
+        <td><label for="password">Mật khẩu:</label></td>
+        <td><input type="password" id="password" name="password" required /></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <button type="submit">Đăng nhập</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+
+  <p>Chưa có tài khoản? <a href="/auth/register">Đăng ký</a></p>
+
+  <hr />
+  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+</body>
+</html>

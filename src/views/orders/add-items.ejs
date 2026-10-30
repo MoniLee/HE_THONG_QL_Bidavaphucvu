@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gọi Món — Order #<%= order.id %> | Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+  <nav>
+    <strong>🎱 Quản Lý Quán Bi-Da</strong> &nbsp;|&nbsp;
+    <a href="/">Trang chủ</a> |
+    <a href="/tables">Bàn bi-da</a> |
+    <a href="/menu">Thực đơn</a> |
+    <a href="/orders">Order</a> |
+    <a href="/invoices">Hóa đơn</a> |
+    <a href="/shifts">Ca làm</a> |
+    <a href="/revenue">Doanh thu</a>
+  </nav>
+  <%- include('../partials/auth-controls') %>
+  <hr />
+
+  <h1>Gọi Món — Order #<%= order.id %> (<%= order.table ? order.table.name : '' %>)</h1>
+
+  <% if (typeof error !== 'undefined' && error) { %><p><strong>[Lỗi]</strong> <%= error %></p><% } %>
+
+  <%# ── Form gọi món (hỗ trợ nhiều dòng qua JS) ───────────────────────── %>
+  <form method="POST" action="/orders/<%= order.id %>/add-items" id="addItemsForm">
+
+    <table border="1" cellpadding="6" cellspacing="0" id="itemsTable">
+      <thead>
+        <tr>
+          <th>Món</th>
+          <th>Số lượng</th>
+          <th>Ghi chú</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody id="itemsBody">
+        <tr id="row-0">
+          <td>
+            <select name="items[0][menuItemId]" required>
+              <option value="">-- Chọn món --</option>
+              <% menuItems.forEach(function(m) { %>
+                <option value="<%= m.id %>">
+                  <%= m.name %> (<%= m.category === 'FOOD' ? 'Đồ ăn' : m.category === 'DRINK' ? 'Nước uống' : 'Khác' %>) — <%= Number(m.price).toLocaleString('vi-VN') %>đ
+                </option>
+              <% }); %>
+            </select>
+          </td>
+          <td><input type="number" name="items[0][quantity]" value="1" min="1" required style="width:60px" /></td>
+          <td><input type="text" name="items[0][note]" placeholder="Ghi chú (tùy chọn)" /></td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <br />
+    <%# Nút thêm dòng bằng JS %>
+    <button type="button" onclick="addRow()">+ Thêm dòng</button>
+    &nbsp;
+    <button type="submit">Xác nhận gọi món</button>
+    &nbsp;
+    <a href="/orders/<%= order.id %>">Hủy</a>
+  </form>
+
+  <script>
+    // Danh sách món từ server để clone select
+    var menuOptions = `<% menuItems.forEach(function(m) { %><option value="<%= m.id %>"><%= m.name %> — <%= Number(m.price).toLocaleString('vi-VN') %>đ</option><% }); %>`;
+    var rowCount = 1;
+
+    function addRow() {
+      var tbody = document.getElementById('itemsBody');
+      var idx = rowCount++;
+      var tr = document.createElement('tr');
+      tr.id = 'row-' + idx;
+      tr.innerHTML = `
+        <td>
+          <select name="items[${idx}][menuItemId]" required>
+            <option value="">-- Chọn món --</option>
+            ${menuOptions}
+          </select>
+        </td>
+        <td><input type="number" name="items[${idx}][quantity]" value="1" min="1" required style="width:60px" /></td>
+        <td><input type="text" name="items[${idx}][note]" placeholder="Ghi chú (tùy chọn)" /></td>
+        <td><button type="button" onclick="removeRow('row-${idx}')">Xóa</button></td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    function removeRow(id) {
+      var row = document.getElementById(id);
+      if (row) row.remove();
+    }
+  </script>
+
+  <hr />
+  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+</body>
+</html>

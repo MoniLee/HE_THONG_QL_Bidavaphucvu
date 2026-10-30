@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hóa Đơn #<%= invoice.id %> | Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+  <nav>
+    <strong>🎱 Quản Lý Quán Bi-Da</strong> &nbsp;|&nbsp;
+    <a href="/">Trang chủ</a> |
+    <a href="/tables">Bàn bi-da</a> |
+    <a href="/menu">Thực đơn</a> |
+    <a href="/orders">Order</a> |
+    <a href="/invoices">Hóa đơn</a> |
+    <a href="/shifts">Ca làm</a> |
+    <a href="/revenue">Doanh thu</a>
+  </nav>
+  <%- include('../partials/auth-controls') %>
+  <hr />
+
+  <h1>Hóa Đơn #<%= invoice.id %></h1>
+
+  <table border="1" cellpadding="6" cellspacing="0">
+    <tr><th>Hóa đơn #</th><td><%= invoice.id %></td></tr>
+    <tr><th>Bàn</th><td><%= invoice.table ? invoice.table.name : '—' %></td></tr>
+    <tr><th>Order</th><td><a href="/orders/<%= invoice.order ? invoice.order.id : '' %>">#<%= invoice.order ? invoice.order.id : '—' %></a></td></tr>
+    <tr><th>Thời gian in</th><td><%= new Date(invoice.issuedAt).toLocaleString('vi-VN') %></td></tr>
+    <tr><th>Thời gian chơi</th><td><%= invoice.order ? Number(invoice.order.durationHours).toFixed(4) : '—' %> giờ</td></tr>
+    <tr><th>Tiền bàn</th><td><%= Number(invoice.tableAmount).toLocaleString('vi-VN') %> đ</td></tr>
+    <tr><th>Tiền món</th><td><%= Number(invoice.itemsAmount).toLocaleString('vi-VN') %> đ</td></tr>
+    <tr><th>Tổng trước giảm</th><td><%= Number(invoice.subtotal).toLocaleString('vi-VN') %> đ</td></tr>
+    <tr><th>Giảm giá</th><td><%= Number(invoice.discount).toLocaleString('vi-VN') %> đ</td></tr>
+    <tr><th>Tổng thanh toán</th><td><strong><%= Number(invoice.totalAmount).toLocaleString('vi-VN') %> đ</strong></td></tr>
+    <tr>
+      <th>Phương thức</th>
+      <td>
+        <% if (invoice.paymentMethod === 'CASH') { %>Tiền mặt
+        <% } else if (invoice.paymentMethod === 'TRANSFER') { %>Chuyển khoản
+        <% } else { %>Thẻ<% } %>
+      </td>
+    </tr>
+    <tr><th>Ca làm</th><td><%= invoice.shift ? invoice.shift.name + ' — ' + invoice.shift.staffName : '—' %></td></tr>
+    <% if (invoice.note) { %><tr><th>Ghi chú</th><td><%= invoice.note %></td></tr><% } %>
+  </table>
+
+  <%# ── Danh sách món ──────────────────────────────────────────────────── %>
+  <% if (invoice.order && invoice.order.items && invoice.order.items.length > 0) { %>
+    <h3>Danh sách món</h3>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <thead>
+        <tr><th>Tên món</th><th>Số lượng</th><th>Đơn giá</th><th>Thành tiền</th></tr>
+      </thead>
+      <tbody>
+        <% invoice.order.items.forEach(function(item) { %>
+          <tr>
+            <td><%= item.menuItem ? item.menuItem.name : '(đã xóa)' %></td>
+            <td><%= item.quantity %></td>
+            <td><%= Number(item.unitPrice).toLocaleString('vi-VN') %> đ</td>
+            <td><%= Number(item.subtotal).toLocaleString('vi-VN') %> đ</td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } %>
+
+  <br />
+  <button onclick="window.print()">🖨 In hóa đơn</button>
+  &nbsp;
+  <a href="/invoices">← Quay lại danh sách</a>
+
+  <hr />
+  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Danh Sách Hóa Đơn | Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+  <nav>
+    <strong>🎱 Quản Lý Quán Bi-Da</strong> &nbsp;|&nbsp;
+    <a href="/">Trang chủ</a> |
+    <a href="/tables">Bàn bi-da</a> |
+    <a href="/menu">Thực đơn</a> |
+    <a href="/orders">Order</a> |
+    <a href="/invoices">Hóa đơn</a> |
+    <a href="/shifts">Ca làm</a> |
+    <a href="/revenue">Doanh thu</a>
+  </nav>
+  <%- include('../partials/auth-controls') %>
+  <hr />
+
+  <h1>Danh Sách Hóa Đơn</h1>
+
+  <% if (typeof message !== 'undefined' && message) { %><p><strong>[Thông báo]</strong> <%= message %></p><% } %>
+
+  <% if (invoices && invoices.length > 0) { %>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <thead>
+        <tr>
+          <th>Hóa đơn #</th>
+          <th>Order #</th>
+          <th>Bàn</th>
+          <th>Thời gian in</th>
+          <th>Tiền bàn</th>
+          <th>Tiền món</th>
+          <th>Giảm giá</th>
+          <th>Tổng tiền</th>
+          <th>Thanh toán</th>
+          <th>Ca làm</th>
+          <th>Chi tiết</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% invoices.forEach(function(inv) { %>
+          <tr>
+            <td><a href="/invoices/<%= inv.id %>">#<%= inv.id %></a></td>
+            <td><a href="/orders/<%= inv.order ? inv.order.id : '' %>">#<%= inv.order ? inv.order.id : '—' %></a></td>
+            <td><%= inv.table ? inv.table.name : '—' %></td>
+            <td><%= new Date(inv.issuedAt).toLocaleString('vi-VN') %></td>
+            <td><%= Number(inv.tableAmount).toLocaleString('vi-VN') %> đ</td>
+            <td><%= Number(inv.itemsAmount).toLocaleString('vi-VN') %> đ</td>
+            <td><%= Number(inv.discount).toLocaleString('vi-VN') %> đ</td>
+            <td><strong><%= Number(inv.totalAmount).toLocaleString('vi-VN') %> đ</strong></td>
+            <td>
+              <% if (inv.paymentMethod === 'CASH') { %>Tiền mặt
+              <% } else if (inv.paymentMethod === 'TRANSFER') { %>Chuyển khoản
+              <% } else { %>Thẻ<% } %>
+            </td>
+            <td><%= inv.shift ? inv.shift.name : '—' %></td>
+            <td><a href="/invoices/<%= inv.id %>">Xem</a></td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  <% } else { %>
+    <p>Chưa có hóa đơn nào.</p>
+  <% } %>
+
+  <hr />
+  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+</body>
+</html>

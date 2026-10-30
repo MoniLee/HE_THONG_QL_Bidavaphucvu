@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đăng Ký | Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+  <h1>🎱 Quản Lý Quán Bi-Da</h1>
+  <h2>Đăng Ký Tài Khoản</h2>
+
+  <% if (typeof error !== 'undefined' && error) { %>
+    <p><strong>[Lỗi]</strong> <%= error %></p>
+  <% } %>
+
+  <form method="POST" action="/auth/register">
+    <table cellpadding="6">
+      <tr>
+        <td><label for="fullName">Họ và tên:</label></td>
+        <td><input type="text" id="fullName" name="fullName" required placeholder="Nguyễn Văn A" /></td>
+      </tr>
+      <tr>
+        <td><label for="email">Email:</label></td>
+        <td><input type="email" id="email" name="email" required placeholder="email@example.com" /></td>
+      </tr>
+      <tr>
+        <td><label for="password">Mật khẩu:</label></td>
+        <td><input type="password" id="password" name="password" required minlength="6" /></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <button type="submit">Đăng ký</button>
+        </td>
+      </tr>
+    </table>
+  </form>
+
+  <p>Đã có tài khoản? <a href="/auth/login">Đăng nhập</a></p>
+
+  <hr />
+  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+</body>
+</html>

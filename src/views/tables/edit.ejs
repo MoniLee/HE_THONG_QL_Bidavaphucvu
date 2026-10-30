@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sửa Bàn | Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+  <nav>
+    <strong>🎱 Quản Lý Quán Bi-Da</strong> &nbsp;|&nbsp;
+    <a href="/">Trang chủ</a> |
+    <a href="/tables">Bàn bi-da</a> |
+    <a href="/menu">Thực đơn</a> |
+    <a href="/orders">Order</a> |
+    <a href="/invoices">Hóa đơn</a> |
+    <a href="/shifts">Ca làm</a> |
+    <a href="/revenue">Doanh thu</a>
+  </nav>
+  <%- include('../partials/auth-controls') %>
+  <hr />
+
+  <h1>Sửa Bàn: <%= table.name %></h1>
+
+  <% if (typeof error !== 'undefined' && error) { %><p><strong>[Lỗi]</strong> <%= error %></p><% } %>
+
+  <%# Dùng POST + _method để giả lập PATCH vì HTML form chỉ hỗ trợ GET/POST %>
+  <form method="POST" action="/tables/<%= table.id %>/update">
+    <table cellpadding="6">
+      <tr>
+        <td><label for="name">Tên bàn:</label></td>
+        <td><input type="text" id="name" name="name" required value="<%= table.name %>" /></td>
+      </tr>
+      <tr>
+        <td><label for="price">Giá/giờ (đ):</label></td>
+        <td>
+          <input type="number" id="price" name="price" required min="0" step="1000"
+            value="<%= Number(table.price) %>"
+            <%= table.isActive ? 'disabled title="Bàn đang chơi, không thể đổi giá"' : '' %> />
+          <% if (table.isActive) { %><small>(Đang trong phiên chơi)</small><% } %>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>
+          <button type="submit">Lưu thay đổi</button>
+          &nbsp;
+          <a href="/tables">Hủy</a>
+        </td>
+      </tr>
+    </table>
+  </form>
+
+  <%# ── Đổi trạng thái thủ công ────────────────────────────────────────── %>
+  <% if (!table.isActive) { %>
+    <h3>Đổi trạng thái</h3>
+    <form method="POST" action="/tables/<%= table.id %>/status">
+      <select name="status">
+        <option value="AVAILABLE" <%= table.status === 'AVAILABLE' ? 'selected' : '' %>>Sẵn sàng</option>
+        <option value="RESERVED"  <%= table.status === 'RESERVED'  ? 'selected' : '' %>>Đã đặt trước</option>
+        <option value="MAINTENANCE" <%= table.status === 'MAINTENANCE' ? 'selected' : '' %>>Bảo trì</option>
+      </select>
+      <button type="submit">Cập nhật trạng thái</button>
+    </form>
+  <% } %>
+
+  <hr />
+  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+</body>
+</html>

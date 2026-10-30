@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Trang Chủ | Quản Lý Quán Bi-Da</title>
+</head>
+<body>
+
+  <nav>
+    <strong>🎱 Quản Lý Quán Bi-Da</strong>
+    &nbsp;|&nbsp;
+    <a href="/">Trang chủ</a> |
+    <a href="/tables">Bàn bi-da</a> |
+    <a href="/menu">Thực đơn</a> |
+    <a href="/orders">Order</a> |
+    <a href="/invoices">Hóa đơn</a> |
+    <a href="/shifts">Ca làm</a> |
+    <a href="/revenue">Doanh thu</a>
+  </nav>
+  <%- include('partials/auth-controls') %>
+  <hr />
+
+  <h1>🎱 Quản Lý Quán Bi-Da &amp; Dịch Vụ</h1>
+  <p>Chào mừng! Chọn chức năng bên dưới để bắt đầu.</p>
+
+  <%# ── Thống kê nhanh ────────────────────────────────────────────────── %>
+  <h2>Thống kê nhanh hôm nay</h2>
+  <table border="1" cellpadding="6" cellspacing="0">
+    <tr>
+      <th>Tổng bàn</th>
+      <th>Đang chơi</th>
+      <th>Sẵn sàng</th>
+      <th>Doanh thu hôm nay</th>
+      <th>Hóa đơn hôm nay</th>
+    </tr>
+    <tr>
+      <td><%= stats.totalTables %></td>
+      <td><%= stats.occupiedTables %></td>
+      <td><%= stats.availableTables %></td>
+      <td><%= stats.todayRevenue.toLocaleString('vi-VN') %> đ</td>
+      <td><%= stats.todayInvoices %></td>
+    </tr>
+  </table>
+
+  <%# ── Ca làm đang mở ────────────────────────────────────────────────── %>
+  <h2>Ca làm hiện tại</h2>
+  <% if (openShift) { %>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <tr><th>ID</th><th>Tên ca</th><th>Nhân viên</th><th>Bắt đầu</th><th>Doanh thu ca</th><th>Thao tác</th></tr>
+      <tr>
+        <td><%= openShift.id %></td>
+        <td><%= openShift.name %></td>
+        <td><%= openShift.staffName %></td>
+        <td><%= new Date(openShift.startTime).toLocaleString('vi-VN') %></td>
+        <td><%= Number(openShift.totalRevenue).toLocaleString('vi-VN') %> đ</td>
+        <td>
+          <form method="POST" action="/shifts/<%= openShift.id %>/close" style="display:inline">
+            <button type="submit" onclick="return confirm('Xác nhận đóng ca?')">Đóng ca</button>
+          </form>
+        </td>
+      </tr>
+    </table>
+  <% } else { %>
+    <p>Chưa có ca làm nào đang mở.</p>
+    <a href="/shifts/new">+ Mở ca mới</a>
+  <% } %>
+
+  <%# ── Trạng thái các bàn ─────────────────────────────────────────────── %>
+  <h2>Trạng thái bàn bi-da</h2>
+  <% if (tables && tables.length > 0) { %>
+    <table border="1" cellpadding="6" cellspacing="0">
+      <tr>
+        <th>Tên bàn</th>
+        <th>Giá/giờ</th>
+        <th>Trạng thái</th>
+        <th>Bắt đầu chơi</th>
+        <th>Thao tác</th>
+      </tr>
+      <% tables.forEach(function(table) { %>
+        <tr>
+          <td><a href="/tables/<%= table.id %>"><%= table.name %></a></td>
+          <td><%= Number(table.price).toLocaleString('vi-VN') %> đ</td>
+          <td>
+            <% if (table.status === 'AVAILABLE') { %>Sẵn sàng
+            <% } else if (table.status === 'OCCUPIED') { %>🟢 Đang chơi
+            <% } else if (table.status === 'RESERVED') { %>🟡 Đã đặt
+            <% } else { %>🔴 Bảo trì<% } %>
+          </td>
+          <td><%= table.startTime ? new Date(table.startTime).toLocaleString('vi-VN') : '—' %></td>
+          <td>
+            <% if (table.status === 'AVAILABLE') { %>
+              <form method="POST" action="/orders" style="display:inline">
+                <input type="hidden" name="tableId" value="<%= table.id %>" />
+                <button type="submit">Bắt đầu chơi</button>
+              </form>
+            <% } else if (table.status === 'OCCUPIED') { %>
+              <a href="/orders/table/<%= table.id %>">Xem order</a>
+            <% } %>
+          </td>
+        </tr>
+      <% }); %>
+    </table>
+  <% } else { %>
+    <p>Chưa có bàn nào. <a href="/tables/new">+ Thêm bàn</a></p>
+  <% } %>
+
+  <%# ── Truy cập nhanh ────────────────────────────────────────────────── %>
+  <h2>Truy cập nhanh</h2>
+  <ul>
+    <li><a href="/tables/new">+ Thêm bàn mới</a></li>
+    <li><a href="/menu/new">+ Thêm món vào thực đơn</a></li>
+    <li><a href="/shifts/new">+ Mở ca làm mới</a></li>
+    <li><a href="/revenue">Xem báo cáo doanh thu</a></li>
+  </ul>
+
+  <hr />
+  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+</body>
+</html>
