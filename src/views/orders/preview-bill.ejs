@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hóa Đơn Tạm Tính — Order #<%= bill.orderId %> | Quản Lý Quán Bi-Da</title>
+  <link rel="stylesheet" href="/assets/portal.css" />
 </head>
 <body>
   <nav>
@@ -56,7 +57,7 @@
     <button type="submit" onclick="return confirm('Kết thúc phiên chơi và lập hóa đơn?')">Kết thúc &amp; Thanh toán</button>
   </form>
   &nbsp;
-  <a href="/orders/<%= bill.orderId %>">← Quay lại order</a>
+  <a class="page-back-link" href="/orders/<%= bill.orderId %>">← Quay lại order</a>
 
   <hr />
   <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>

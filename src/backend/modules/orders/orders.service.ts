@@ -33,7 +33,7 @@ export class OrdersService {
     const order = await this.orderRepo.findOne({
       where: { id },
       // TypeORM v0.3+: dùng object thay vì string array
-      relations: { table: true, items: { menuItem: true } },
+      relations: { table: true, items: { menuItem: true }, invoice: true },
     });
     if (!order) throw new NotFoundException(`Không tìm thấy order với ID ${id}`);
     return order;

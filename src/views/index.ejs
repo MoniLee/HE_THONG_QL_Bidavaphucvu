@@ -3,118 +3,68 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Trang Chủ | Quản Lý Quán Bi-Da</title>
+  <title>Quản lý bàn | Bida Phục Vụ</title>
+  <style>
+    :root{font-family:Inter,"Segoe UI",Arial,sans-serif;color:#172b4d;background:#f2f5f9;font-synthesis:none;font-optical-sizing:auto}*{box-sizing:border-box}body{margin:0;min-width:320px}.topbar{height:58px;background:#0866c6;color:#fff;display:flex;align-items:center;gap:24px;padding:0 22px;box-shadow:0 2px 8px #12395a20}.brand{font-size:17px;font-weight:800;white-space:nowrap}.brand-mark{display:inline-grid;place-items:center;width:30px;height:30px;background:#fff;color:#0873d1;border-radius:9px;margin-right:8px}.main-nav{display:flex;align-items:center;gap:4px;flex:1}.main-nav a,.top-actions a{color:#eaf4ff;text-decoration:none;font-size:13px;padding:9px 12px;border-radius:8px}.main-nav a:hover,.main-nav a.active,.top-actions a:hover{background:#ffffff22}.top-actions{display:flex;align-items:center;gap:10px;font-size:12px;white-space:nowrap}.top-actions form{margin:0}.top-actions button{background:transparent;border:1px solid #ffffff65;color:white;border-radius:7px;padding:7px 10px;cursor:pointer}.page{padding:18px 20px 22px;max-width:1800px;margin:auto}.page-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}.page-heading h1{font-size:20px;margin:0;color:#153657}.page-heading p{margin:4px 0 0;color:#6b7d90;font-size:12px}.heading-actions{display:flex;gap:8px}.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid #d4e0ec;border-radius:8px;background:white;color:#28435c;padding:9px 12px;text-decoration:none;font-size:12px;font-weight:650;cursor:pointer}.btn-primary{background:#0876d5;color:#fff;border-color:#0876d5}.btn-success{background:#16a56a;color:white;border-color:#16a56a}.btn:hover{filter:brightness(.97)}.notice{padding:10px 13px;background:#fff1e8;color:#9a4d10;border:1px solid #ffddbf;border-radius:8px;margin-bottom:12px;font-size:13px}.workspace{display:grid;grid-template-columns:minmax(420px,1.08fr) minmax(390px,.92fr);gap:15px;align-items:stretch;min-height:calc(100vh - 176px)}.panel{background:#fff;border:1px solid #e1e8f0;border-radius:12px;box-shadow:0 3px 14px #253a5010;overflow:hidden;min-width:0}.panel-head{padding:15px 17px 12px;border-bottom:1px solid #edf1f5}.panel-title{display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-title h2{font-size:15px;margin:0}.muted{color:#8292a4;font-size:11px}.table-toolbar{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:13px}.tabs{display:flex;gap:5px;flex-wrap:wrap}.filter-tab{border:0;background:transparent;color:#67798c;font-size:11px;padding:7px 10px;border-radius:20px;cursor:pointer}.filter-tab.active{background:#e9f3ff;color:#0871ca;font-weight:700}.search{border:1px solid #dce5ef;border-radius:7px;padding:8px 10px;font-size:11px;outline:none;width:170px}.search:focus{border-color:#1682e1}.table-grid{padding:15px;display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:10px;align-content:start}.table-grid form{margin:0;min-width:0}.table-card{height:112px;width:100%;padding:0;appearance:none;font:inherit;border:1px solid #dce5ee;background:#fff;border-radius:10px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;position:relative;text-decoration:none;color:#34506a;transition:.15s;cursor:pointer}.table-card:hover{transform:translateY(-2px);box-shadow:0 5px 14px #203d5b18;border-color:#96c7f2}.table-card.available{background:#edf6ff;border-color:#d3e9ff}.table-card.occupied{background:#e5f4ff;border:1px solid #b9ddff}.table-card.reserved{background:#fff7e5;border-color:#f5dfac}.table-card.maintenance{background:#f4f5f7;border-color:#e3e6ea}.table-icon{width:50px;height:29px;border:2px solid #88a2bc;border-radius:7px;display:grid;place-items:center;font-size:15px;color:#6b879f;background:#fff}.occupied .table-icon{background:#1682df;color:#fff;border-color:#1682df}.available .table-icon{color:#1278d2;border-color:#1682df}.table-name{font-size:11px;font-weight:650}.table-meta{font-size:9px;color:#75889b}.state-dot{position:absolute;width:8px;height:8px;right:9px;top:9px;border-radius:50%;background:#20b377}.occupied .state-dot{background:#f09d27}.reserved .state-dot{background:#eca928}.maintenance .state-dot{background:#98a2ae}.empty-state{grid-column:1/-1;text-align:center;padding:42px 16px;color:#788b9f;font-size:13px}.table-footer{padding:10px 17px;border-top:1px solid #edf1f5;color:#8090a1;font-size:10px;display:flex;justify-content:space-between}.order-panel{display:flex;flex-direction:column}.order-tabs{display:flex;gap:6px;padding:12px 15px 0;overflow-x:auto}.order-tab{border:1px solid #e3eaf1;border-radius:7px 7px 0 0;background:#f7f9fb;padding:8px 11px;color:#728297;text-decoration:none;font-size:11px;white-space:nowrap}.order-tab.active{background:#fff;color:#0874d1;border-bottom-color:#fff;font-weight:700}.order-content{padding:15px;flex:1}.order-banner{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 12px;background:#f1f8ff;border:1px solid #dbeeff;border-radius:8px;margin-bottom:13px}.order-banner strong{font-size:13px}.order-banner span{font-size:10px;color:#71869a}.order-summary{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0 15px}.summary-item{padding:10px 11px;background:#f8fafc;border-radius:8px}.summary-item span{display:block;color:#7d8da0;font-size:10px;margin-bottom:5px}.summary-item strong{font-size:13px}.order-table-wrap{overflow-x:auto}.order-table{width:100%;border-collapse:collapse;font-size:11px}.order-table th{text-align:left;color:#75869a;font-weight:600;background:#f7f9fb;padding:9px 8px;border-bottom:1px solid #e6edf3}.order-table td{padding:10px 8px;border-bottom:1px solid #edf1f5}.order-table td:last-child,.order-table th:last-child{text-align:right}.order-empty{min-height:175px;display:grid;place-items:center;text-align:center;color:#8292a4;font-size:12px;padding:20px}.order-empty b{display:block;color:#435b73;font-size:13px;margin-bottom:5px}.order-actions{display:flex;gap:8px;flex-wrap:wrap;padding-top:14px;margin-top:14px;border-top:1px solid #edf1f5}.order-actions form{margin:0}.bottom-bar{background:#fff;border:1px solid #e0e8f0;border-radius:10px;margin-top:14px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px;box-shadow:0 3px 12px #253a5008}.bottom-stats{display:flex;gap:24px;align-items:center}.bottom-stat span{display:block;color:#8997a7;font-size:10px;margin-bottom:3px}.bottom-stat strong{font-size:13px}.bottom-links{display:flex;gap:7px;flex-wrap:wrap}.bottom-links a{font-size:11px;color:#3c5c79;text-decoration:none;padding:7px 9px;border-radius:6px;background:#f5f8fb}.mobile-nav{display:none}@media(max-width:980px){.topbar{gap:10px;padding:0 12px}.brand{font-size:14px}.main-nav a{padding:8px 7px;font-size:11px}.top-actions{font-size:0}.workspace{grid-template-columns:minmax(300px,1fr) minmax(300px,1fr)}.table-grid{grid-template-columns:repeat(auto-fill,minmax(82px,1fr));gap:8px}.table-card{height:100px}}@media(max-width:720px){.topbar{height:auto;min-height:56px;flex-wrap:wrap;padding:10px 12px}.brand{flex:1}.main-nav{order:3;flex-basis:100%;overflow:auto}.main-nav a{white-space:nowrap}.page{padding:14px 11px}.page-heading{align-items:flex-start;gap:10px}.page-heading h1{font-size:17px}.heading-actions .btn{font-size:10px;padding:8px}.workspace{grid-template-columns:1fr;min-height:0}.table-grid{grid-template-columns:repeat(auto-fill,minmax(84px,1fr))}.bottom-bar{align-items:flex-start;flex-direction:column}.bottom-stats{gap:17px;flex-wrap:wrap}.search{width:120px}.panel-title h2{font-size:14px}}
+  </style>
 </head>
 <body>
-
-  <nav>
-    <strong>🎱 Quản Lý Quán Bi-Da</strong>
-    &nbsp;|&nbsp;
-    <a href="/">Trang chủ</a> |
-    <a href="/tables">Bàn bi-da</a> |
-    <a href="/menu">Thực đơn</a> |
-    <a href="/orders">Order</a> |
-    <a href="/invoices">Hóa đơn</a> |
-    <a href="/shifts">Ca làm</a> |
-    <a href="/revenue">Doanh thu</a>
-  </nav>
-  <%- include('partials/auth-controls') %>
-  <hr />
-
-  <h1>🎱 Quản Lý Quán Bi-Da &amp; Dịch Vụ</h1>
-  <p>Chào mừng! Chọn chức năng bên dưới để bắt đầu.</p>
-
-  <%# ── Thống kê nhanh ────────────────────────────────────────────────── %>
-  <h2>Thống kê nhanh hôm nay</h2>
-  <table border="1" cellpadding="6" cellspacing="0">
-    <tr>
-      <th>Tổng bàn</th>
-      <th>Đang chơi</th>
-      <th>Sẵn sàng</th>
-      <th>Doanh thu hôm nay</th>
-      <th>Hóa đơn hôm nay</th>
-    </tr>
-    <tr>
-      <td><%= stats.totalTables %></td>
-      <td><%= stats.occupiedTables %></td>
-      <td><%= stats.availableTables %></td>
-      <td><%= stats.todayRevenue.toLocaleString('vi-VN') %> đ</td>
-      <td><%= stats.todayInvoices %></td>
-    </tr>
-  </table>
-
-  <%# ── Ca làm đang mở ────────────────────────────────────────────────── %>
-  <h2>Ca làm hiện tại</h2>
-  <% if (openShift) { %>
-    <table border="1" cellpadding="6" cellspacing="0">
-      <tr><th>ID</th><th>Tên ca</th><th>Nhân viên</th><th>Bắt đầu</th><th>Doanh thu ca</th><th>Thao tác</th></tr>
-      <tr>
-        <td><%= openShift.id %></td>
-        <td><%= openShift.name %></td>
-        <td><%= openShift.staffName %></td>
-        <td><%= new Date(openShift.startTime).toLocaleString('vi-VN') %></td>
-        <td><%= Number(openShift.totalRevenue).toLocaleString('vi-VN') %> đ</td>
-        <td>
-          <form method="POST" action="/shifts/<%= openShift.id %>/close" style="display:inline">
-            <button type="submit" onclick="return confirm('Xác nhận đóng ca?')">Đóng ca</button>
-          </form>
-        </td>
-      </tr>
-    </table>
-  <% } else { %>
-    <p>Chưa có ca làm nào đang mở.</p>
-    <a href="/shifts/new">+ Mở ca mới</a>
-  <% } %>
-
-  <%# ── Trạng thái các bàn ─────────────────────────────────────────────── %>
-  <h2>Trạng thái bàn bi-da</h2>
-  <% if (tables && tables.length > 0) { %>
-    <table border="1" cellpadding="6" cellspacing="0">
-      <tr>
-        <th>Tên bàn</th>
-        <th>Giá/giờ</th>
-        <th>Trạng thái</th>
-        <th>Bắt đầu chơi</th>
-        <th>Thao tác</th>
-      </tr>
-      <% tables.forEach(function(table) { %>
-        <tr>
-          <td><a href="/tables/<%= table.id %>"><%= table.name %></a></td>
-          <td><%= Number(table.price).toLocaleString('vi-VN') %> đ</td>
-          <td>
-            <% if (table.status === 'AVAILABLE') { %>Sẵn sàng
-            <% } else if (table.status === 'OCCUPIED') { %>🟢 Đang chơi
-            <% } else if (table.status === 'RESERVED') { %>🟡 Đã đặt
-            <% } else { %>🔴 Bảo trì<% } %>
-          </td>
-          <td><%= table.startTime ? new Date(table.startTime).toLocaleString('vi-VN') : '—' %></td>
-          <td>
-            <% if (table.status === 'AVAILABLE') { %>
-              <form method="POST" action="/orders" style="display:inline">
-                <input type="hidden" name="tableId" value="<%= table.id %>" />
-                <button type="submit">Bắt đầu chơi</button>
-              </form>
-            <% } else if (table.status === 'OCCUPIED') { %>
-              <a href="/orders/table/<%= table.id %>">Xem order</a>
+  <header class="topbar">
+    <a class="brand" href="/" style="color:white;text-decoration:none"><span class="brand-mark">◈</span>Bida Phục Vụ</a>
+    <nav class="main-nav" aria-label="Điều hướng chính">
+      <a class="active" href="/">▦ Phòng bàn</a><a href="/orders">▤ Thực đơn &amp; đơn</a><a href="/menu">✚ Đặt gọi món</a><a href="/invoices">▣ Hóa đơn</a><a href="/revenue">▥ Doanh thu</a>
+    </nav>
+    <div class="top-actions"><span><%= currentUser.fullName %></span><form method="POST" action="/auth/logout"><button type="submit">Đăng xuất</button></form></div>
+  </header>
+  <main class="page">
+    <div class="page-heading"><div><h1>Sơ đồ phòng bàn</h1><p>Quản lý trạng thái bàn và phiên chơi trong ca</p></div><div class="heading-actions"><a class="btn" href="/shifts">◷ Ca làm<% if (openShift) { %> · Đang mở<% } %></a><a class="btn btn-primary" href="/tables/new">＋ Thêm bàn</a></div></div>
+    <% if (error) { %><div class="notice">⚠ <%= error %></div><% } %>
+    <div class="workspace">
+      <section class="panel" aria-label="Sơ đồ bàn">
+        <div class="panel-head"><div class="panel-title"><h2>Phòng bàn</h2><span class="muted"><%= stats.totalTables %> bàn tất cả</span></div>
+          <div class="table-toolbar"><div class="tabs"><button class="filter-tab active" data-filter="all">Tất cả <%= stats.totalTables %></button><button class="filter-tab" data-filter="AVAILABLE">Sẵn sàng <%= stats.availableTables %></button><button class="filter-tab" data-filter="OCCUPIED">Đang dùng <%= stats.occupiedTables %></button><button class="filter-tab" data-filter="RESERVED">Đặt trước</button></div><input class="search" id="table-search" placeholder="⌕ Tìm bàn..." aria-label="Tìm bàn"></div>
+        </div>
+        <div class="table-grid" id="table-grid">
+          <% if (tables && tables.length) { tables.forEach(function(table) { const activeOrder = openOrders.find(function(order) { return order.table && order.table.id === table.id; }); %>
+            <% if (table.status === 'AVAILABLE') { %><form method="POST" action="/orders" style="margin:0"><input type="hidden" name="tableId" value="<%= table.id %>"><button class="table-card available" type="submit" data-status="<%= table.status %>" data-name="<%= table.name.toLowerCase() %>" title="Bắt đầu phiên tại <%= table.name %>"><span class="state-dot"></span><span class="table-icon">▱</span><span class="table-name"><%= table.name %></span><span class="table-meta"><%= Number(table.price).toLocaleString('vi-VN') %> đ/giờ</span></button></form><% } else { %>
+              <a class="table-card <%= table.status.toLowerCase() %>" data-status="<%= table.status %>" data-name="<%= table.name.toLowerCase() %>" href="<%= activeOrder ? '/orders/' + activeOrder.id : '/tables/' + table.id %>" title="<%= table.name %> · <%= Number(table.price).toLocaleString('vi-VN') %> đ/giờ"><span class="state-dot"></span><span class="table-icon"><%= table.status === 'OCCUPIED' ? '●' : '▱' %></span><span class="table-name"><%= table.name %></span><span class="table-meta"><%= Number(table.price).toLocaleString('vi-VN') %> đ/giờ</span></a>
             <% } %>
-          </td>
-        </tr>
-      <% }); %>
-    </table>
-  <% } else { %>
-    <p>Chưa có bàn nào. <a href="/tables/new">+ Thêm bàn</a></p>
-  <% } %>
-
-  <%# ── Truy cập nhanh ────────────────────────────────────────────────── %>
-  <h2>Truy cập nhanh</h2>
-  <ul>
-    <li><a href="/tables/new">+ Thêm bàn mới</a></li>
-    <li><a href="/menu/new">+ Thêm món vào thực đơn</a></li>
-    <li><a href="/shifts/new">+ Mở ca làm mới</a></li>
-    <li><a href="/revenue">Xem báo cáo doanh thu</a></li>
-  </ul>
-
-  <hr />
-  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+          <% }); } else { %><div class="empty-state">Chưa có bàn nào trong sơ đồ.<br><a class="btn btn-primary" style="margin-top:12px" href="/tables/new">＋ Tạo bàn đầu tiên</a></div><% } %>
+        </div>
+        <div class="table-footer"><span>● Sẵn sàng &nbsp; ● Đang chơi &nbsp; ● Đặt trước &nbsp; ● Bảo trì</span><a href="/tables" style="color:#0874d1;text-decoration:none">Quản lý danh sách →</a></div>
+      </section>
+      <section class="panel order-panel" aria-label="Phiên chơi đang mở">
+        <div class="panel-head"><div class="panel-title"><h2>Phiên chơi đang hoạt động</h2><span class="muted"><%= openOrders.length %> phiên</span></div></div>
+        <% if (openOrders.length) { %>
+          <div class="order-tabs"><% openOrders.forEach(function(order,index){ %><a class="order-tab <%= index === 0 ? 'active' : '' %>" href="/orders/<%= order.id %>"><%= order.table ? order.table.name : 'Bàn' %> · #<%= order.id %></a><% }); %></div>
+          <% const order = openOrders[0]; %>
+          <div class="order-content"><div class="order-banner"><div><strong><%= order.table ? order.table.name : 'Phiên chơi' %></strong><br><span>Bắt đầu lúc <%= new Date(order.startTime).toLocaleTimeString('vi-VN',{hour:'2-digit',minute:'2-digit'}) %></span></div><a class="btn" href="/orders/<%= order.id %>">Chi tiết phiên →</a></div>
+            <div class="order-summary"><div class="summary-item"><span>Thời gian chơi</span><strong><%= ((Date.now() - new Date(order.startTime).getTime()) / 3600000).toFixed(1) %> giờ</strong></div><div class="summary-item"><span>Tạm tính tiền món</span><strong><%= Number(order.itemsAmount).toLocaleString('vi-VN') %> đ</strong></div></div>
+            <% if (order.items && order.items.length) { %><div class="order-table-wrap"><table class="order-table"><thead><tr><th>Món gọi</th><th>SL</th><th>Đơn giá</th><th>Thành tiền</th></tr></thead><tbody><% order.items.forEach(function(item){ %><tr><td><%= item.menuItem ? item.menuItem.name : 'Món đã xóa' %></td><td><%= item.quantity %></td><td><%= Number(item.unitPrice).toLocaleString('vi-VN') %> đ</td><td><%= Number(item.subtotal).toLocaleString('vi-VN') %> đ</td></tr><% }); %></tbody></table></div><% } else { %><div class="order-empty"><div><b>Chưa có món được gọi</b>Thêm đồ uống hoặc món ăn vào phiên này.</div></div><% } %>
+            <div class="order-actions"><a class="btn btn-primary" href="/orders/<%= order.id %>/add-items">＋ Gọi món</a><a class="btn" href="/orders/<%= order.id %>">Xem chi tiết</a><form method="POST" action="/orders/<%= order.id %>/close" onsubmit="return confirm('Kết thúc phiên chơi và chuyển sang thanh toán?')"><button class="btn btn-success" type="submit">Tính tiền</button></form></div>
+          </div>
+        <% } else { %><div class="order-empty" style="flex:1"><div><b>Chưa có phiên chơi nào</b>Chọn một bàn sẵn sàng để bắt đầu phục vụ.<br><span class="muted">Bạn cũng có thể mở ca mới từ nút Ca làm.</span></div></div><% } %>
+      </section>
+    </div>
+    <section class="bottom-bar"><div class="bottom-stats"><div class="bottom-stat"><span>Doanh thu hôm nay</span><strong><%= Number(stats.todayRevenue).toLocaleString('vi-VN') %> đ</strong></div><div class="bottom-stat"><span>Hóa đơn hôm nay</span><strong><%= stats.todayInvoices %></strong></div><div class="bottom-stat"><span>Bàn đang chơi</span><strong><%= stats.occupiedTables %> / <%= stats.totalTables %></strong></div></div><nav class="bottom-links" aria-label="Truy cập nhanh"><a href="/orders">Đơn hàng</a><a href="/invoices">Hóa đơn</a><a href="/shifts">Ca làm</a><a href="/revenue">Báo cáo doanh thu</a></nav></section>
+  </main>
+  <script>
+    const cards = [...document.querySelectorAll('.table-card')];
+    const search = document.getElementById('table-search');
+    const refreshTables = () => {
+      const filter = document.querySelector('.filter-tab.active').dataset.filter;
+      const query = search.value.trim().toLocaleLowerCase('vi');
+      cards.forEach((card) => {
+        const visible = (filter === 'all' || card.dataset.status === filter) && card.dataset.name.includes(query);
+        (card.closest('form') || card).hidden = !visible;
+      });
+    };
+    document.querySelectorAll('.filter-tab').forEach((tab) => tab.addEventListener('click', () => {
+      document.querySelectorAll('.filter-tab').forEach((item) => item.classList.remove('active'));
+      tab.classList.add('active');
+      refreshTables();
+    }));
+    search.addEventListener('input', refreshTables);
+  </script>
 </body>
 </html>

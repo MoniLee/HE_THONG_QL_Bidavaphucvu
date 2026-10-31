@@ -1,0 +1,454 @@
+:root {
+  color-scheme: light;
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+  color: #18334e;
+  background: #f3f6fa;
+  font-synthesis: none;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  padding: 0 clamp(16px, 3vw, 44px) 36px;
+  background: #f3f6fa;
+  color: #18334e;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+body > nav:first-of-type {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  min-height: 58px;
+  align-items: center;
+  gap: 5px;
+  margin: 0 calc(clamp(16px, 3vw, 44px) * -1) 26px;
+  padding: 0 clamp(16px, 3vw, 44px);
+  overflow-x: auto;
+  background: #0866c6;
+  box-shadow: 0 2px 8px #153d611c;
+  color: white;
+  white-space: nowrap;
+}
+
+body > nav:first-of-type strong {
+  margin-right: 16px;
+  color: white;
+  font-size: 15px;
+  letter-spacing: .1px;
+}
+
+body > nav:first-of-type a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 38px;
+  padding: 0 11px;
+  border-radius: 7px;
+  color: #edf6ff;
+  font-size: 12px;
+  text-decoration: none;
+  transition: background .15s ease;
+}
+
+body > nav:first-of-type a:hover,
+body > nav:first-of-type a:focus-visible {
+  background: #ffffff20;
+  color: white;
+}
+
+body > nav:first-of-type + div[style] {
+  position: absolute;
+  z-index: 11;
+  top: 11px;
+  right: clamp(16px, 3vw, 44px);
+  gap: 9px !important;
+  color: #eff7ff;
+  font-size: 11px;
+}
+
+body > nav:first-of-type + div[style] form { margin: 0; }
+body > nav:first-of-type + div[style] button {
+  padding: 6px 9px;
+  border: 1px solid #ffffff70;
+  border-radius: 7px;
+  background: transparent;
+  color: white;
+  font-size: 11px;
+}
+
+body > h1,
+body > h2,
+body > p,
+body > table,
+body > form,
+body > ul,
+body > a,
+body > div:not([style]),
+body > section,
+body > hr,
+body > footer {
+  max-width: 1180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+body > h1 {
+  margin-top: 0;
+  margin-bottom: 17px;
+  color: #153657;
+  font-size: clamp(21px, 2.2vw, 28px);
+  font-weight: 730;
+  letter-spacing: -.35px;
+}
+
+body > h2 {
+  margin-top: 26px;
+  margin-bottom: 12px;
+  color: #264a6b;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+body > p { color: #64798d; }
+body > p strong { color: #31506b; }
+
+a { color: #0874ce; }
+a:hover { color: #075ca5; }
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  min-height: 35px;
+  padding: 7px 12px;
+  border: 1px solid #d1dfeb;
+  border-radius: 7px;
+  background: white;
+  color: #28445f;
+  font-size: 12px;
+  font-weight: 650;
+  cursor: pointer;
+  transition: background .15s ease, border-color .15s ease, transform .15s ease;
+}
+
+button:hover { border-color: #9dc7eb; background: #f4f9ff; }
+button:active { transform: translateY(1px); }
+
+input:not([type="hidden"]), select, textarea {
+  min-height: 38px;
+  padding: 8px 10px;
+  border: 1px solid #d6e1eb;
+  border-radius: 7px;
+  background: white;
+  color: #193750;
+  outline: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #1780d8;
+  box-shadow: 0 0 0 3px #1780d81a;
+}
+
+body > form {
+  padding: 19px;
+  border: 1px solid #e0e8f0;
+  border-radius: 11px;
+  background: white;
+  box-shadow: 0 3px 14px #253a500c;
+}
+
+body > form.filter-form {
+  display: flex;
+  width: fit-content;
+  max-width: min(1180px, calc(100vw - 32px));
+  align-items: center;
+  gap: 9px;
+  margin: 0 0 16px max(0px, calc((100vw - 1180px) / 2 - clamp(16px, 3vw, 44px)));
+  padding: 10px 14px;
+}
+
+body > form.filter-form select { min-width: 130px; margin: 0; }
+
+body > form[style*="display:inline"] {
+  display: inline-flex !important;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+body > a[href$="/new"] {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  margin: 0 0 15px max(0px, calc((100vw - 1180px) / 2 - clamp(16px, 3vw, 44px)));
+  padding: 0 13px;
+  border: 1px solid #0876d5;
+  border-radius: 7px;
+  background: #0876d5;
+  color: white;
+  font-size: 12px;
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: 0 2px 5px #0876d522;
+}
+
+body > a[href$="/new"]:hover { background: #0667bb; color: white; }
+
+body > a[href="/orders"],
+body > a[href^="/orders?status="] {
+  display: inline-flex;
+  min-height: 31px;
+  align-items: center;
+  margin: 0 5px 14px 0;
+  padding: 0 11px;
+  border: 1px solid #e0e8f0;
+  border-radius: 99px;
+  background: white;
+  color: #526e87;
+  font-size: 11px;
+  text-decoration: none;
+}
+
+body > a[href="/orders"] { margin-left: max(0px, calc((100vw - 1180px) / 2 - clamp(16px, 3vw, 44px))); }
+body > a[href="/orders"]:hover,
+body > a[href^="/orders?status="]:hover { border-color: #acd2f4; background: #eef7ff; color: #0874ce; }
+
+.shift-active {
+  display: flex;
+  max-width: 1180px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin: 0 auto 16px;
+  padding: 13px 15px;
+  border: 1px solid #dce9f4;
+  border-radius: 10px;
+  background: #f7fbff;
+}
+
+.shift-active p { margin: 0; color: #536c83; font-size: 12px; }
+.shift-active form { margin: 0; }
+.shift-active button { border-color: #f0c9bd; background: #fff6f3; color: #a9432b; }
+
+body > form label {
+  display: inline-block;
+  margin: 0 0 5px;
+  color: #425e78;
+  font-size: 12px;
+  font-weight: 650;
+}
+
+body > form input:not([type="hidden"]),
+body > form select,
+body > form textarea {
+  max-width: 100%;
+  margin: 0 0 13px;
+}
+
+body > table {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #e0e8f0 !important;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 10px;
+  background: white;
+  box-shadow: 0 3px 14px #253a500b;
+  font-size: 12px;
+}
+
+body > table th {
+  padding: 11px 12px;
+  border: 0 !important;
+  border-bottom: 1px solid #e4ebf2 !important;
+  background: #f6f9fc;
+  color: #526c84;
+  font-weight: 700;
+  text-align: left;
+  white-space: nowrap;
+}
+
+body > table td {
+  padding: 10px 12px;
+  border: 0 !important;
+  border-bottom: 1px solid #edf1f5 !important;
+  color: #304d67;
+  vertical-align: middle;
+}
+
+body > table tr:last-child td { border-bottom: 0 !important; }
+body > table tr:hover td { background: #fbfdff; }
+
+body > table:has(td:last-child a) td:last-child { white-space: nowrap; }
+body > table:has(td:last-child a) td:last-child a {
+  display: inline-flex;
+  min-height: 32px;
+  align-items: center;
+  justify-content: center;
+  margin: 2px 4px 2px 0;
+  padding: 0 10px;
+  border: 1px solid #d4e0eb;
+  border-radius: 7px;
+  background: #fff;
+  color: #34536e;
+  font-size: 11px;
+  font-weight: 650;
+  line-height: 1.2;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+body > table:has(td:last-child a) td:last-child a:hover {
+  border-color: #92c3ec;
+  background: #f1f8ff;
+  color: #0870c7;
+}
+
+body > table:has(td:last-child a) td:last-child a[href*="/edit"] {
+  border-color: #c9e1f5;
+  background: #f1f8ff;
+  color: #126daf;
+}
+
+body > table:has(td:last-child a) td:last-child form {
+  display: inline-flex !important;
+  margin: 2px 0;
+  vertical-align: middle;
+}
+
+body > table:has(td:last-child a) td:last-child form button {
+  min-height: 32px;
+  padding: 0 10px;
+  border-color: #eacbc5;
+  background: #fff8f6;
+  color: #a84836;
+  font-size: 11px;
+}
+
+body > table:has(td:last-child a) td:last-child span {
+  display: inline-flex;
+  min-height: 25px;
+  align-items: center;
+  padding: 0 8px;
+  border-radius: 99px;
+  background: #f1f4f7;
+  color: #718295;
+  font-size: 10px;
+  vertical-align: middle;
+}
+
+body > a[href$="/edit"],
+body > a[href$="/add-items"],
+body > a[href*="/preview-bill"],
+body > a[href^="/invoices/new"],
+body > a[href^="/orders/table/"],
+.order-call-link {
+  display: inline-flex;
+  min-height: 35px;
+  align-items: center;
+  justify-content: center;
+  margin: 5px 7px 5px 0;
+  padding: 0 12px;
+  border: 1px solid #c9e1f5;
+  border-radius: 7px;
+  background: #f1f8ff;
+  color: #126daf;
+  font-size: 12px;
+  font-weight: 650;
+  text-decoration: none;
+}
+
+body > a[href$="/edit"]:hover,
+body > a[href$="/add-items"]:hover,
+body > a[href*="/preview-bill"]:hover,
+body > a[href^="/invoices/new"]:hover,
+body > a[href^="/orders/table/"]:hover,
+.order-call-link:hover { background: #e4f2ff; }
+
+.order-call-link:focus-visible {
+  outline: 3px solid #0876d54d;
+  outline-offset: 2px;
+}
+
+body > p .order-call-link { margin-left: 8px; }
+
+body > form a {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  justify-content: center;
+  padding: 0 10px;
+  border: 1px solid #d4e0eb;
+  border-radius: 7px;
+  color: #536e86;
+  font-size: 11px;
+  text-decoration: none;
+  vertical-align: middle;
+}
+
+body > a.invoice-view-link,
+body > a.page-back-link {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  margin: 8px 8px 8px 0;
+  padding: 0 13px;
+  border: 1px solid #d1deea;
+  border-radius: 7px;
+  background: #fff;
+  color: #34536e;
+  font-size: 12px;
+  font-weight: 650;
+  text-decoration: none;
+  box-shadow: 0 2px 5px #1c38520a;
+}
+
+body > a.invoice-view-link {
+  border-color: #0876d5;
+  background: #0876d5;
+  color: #fff;
+}
+
+body > a.invoice-view-link:hover { background: #0667bb; color: white; }
+body > a.page-back-link:hover { border-color: #a9cce9; background: #f3f9ff; color: #126daf; }
+
+body > ul {
+  padding: 17px 20px 17px 38px;
+  border: 1px solid #e0e8f0;
+  border-radius: 10px;
+  background: white;
+}
+
+body > hr {
+  margin-top: 28px;
+  border: 0;
+  border-top: 1px solid #e1e8ef;
+}
+
+body > footer {
+  padding: 12px 0;
+  color: #8595a5;
+  font-size: 11px;
+}
+
+@media (max-width: 760px) {
+  body { padding-right: 12px; padding-left: 12px; }
+  body > nav:first-of-type { margin-right: -12px; margin-left: -12px; padding-right: 12px; padding-left: 12px; }
+  body > nav:first-of-type strong { margin-right: 5px; }
+  body > nav:first-of-type a { padding: 0 8px; font-size: 11px; }
+  body > nav:first-of-type + div[style] { display: none !important; }
+  body > table { display: block; overflow-x: auto; white-space: nowrap; }
+  body > form { padding: 14px; }
+}

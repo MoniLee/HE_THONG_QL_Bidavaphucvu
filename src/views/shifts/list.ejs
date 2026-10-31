@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ca Làm | Quản Lý Quán Bi-Da</title>
+  <link rel="stylesheet" href="/assets/portal.css" />
 </head>
 <body>
   <nav>
@@ -26,14 +27,12 @@
 
   <%# ── Ca đang mở ─────────────────────────────────────────────────────── %>
   <% if (openShift) { %>
-    <p>
-      Ca đang mở: <strong><%= openShift.name %></strong>
-      (NV: <%= openShift.staffName %>, bắt đầu: <%= new Date(openShift.startTime).toLocaleString('vi-VN') %>)
-      &nbsp;
-      <form method="POST" action="/shifts/<%= openShift.id %>/close" style="display:inline">
+    <section class="shift-active">
+      <p>Ca đang mở: <strong><%= openShift.name %></strong> (NV: <%= openShift.staffName %>, bắt đầu: <%= new Date(openShift.startTime).toLocaleString('vi-VN') %>)</p>
+      <form method="POST" action="/shifts/<%= openShift.id %>/close">
         <button type="submit" onclick="return confirm('Đóng ca làm này?')">Đóng ca</button>
       </form>
-    </p>
+    </section>
   <% } else { %>
     <a href="/shifts/new">+ Mở ca mới</a>
   <% } %>

@@ -16,6 +16,7 @@ async function bootstrap() {
   // Thư mục chứa các file .ejs (khi build sẽ copy vào dist/views)
   app.setBaseViewsDir(join(__dirname, 'views'));
   app.setViewEngine('ejs');
+  app.useStaticAssets(join(__dirname, 'public'), { prefix: '/assets' });
 
   // ── ValidationPipe toàn cục (cho API) ─────────────────────────────────────
   app.useGlobalPipes(

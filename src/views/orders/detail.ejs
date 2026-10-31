@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Order #<%= order.id %> | Quản Lý Quán Bi-Da</title>
+  <link rel="stylesheet" href="/assets/portal.css" />
 </head>
 <body>
   <nav>
@@ -47,7 +48,7 @@
 
   <%# ── Thao tác ─────────────────────────────────────────────────────────── %>
   <% if (order.status === 'OPEN') { %>
-    <a href="/orders/<%= order.id %>/add-items">+ Gọi thêm món</a>
+    <a class="order-call-link" href="/orders/<%= order.id %>/add-items">+ Gọi thêm món</a>
     &nbsp;
     <a href="/orders/<%= order.id %>/preview-bill">Xem hóa đơn tạm tính</a>
     &nbsp;
@@ -60,6 +61,8 @@
     </form>
   <% } else if (order.status === 'BILLED' && !order.invoice) { %>
     <a href="/invoices/new?orderId=<%= order.id %>">Lập hóa đơn thanh toán</a>
+  <% } else if (order.status === 'BILLED' && order.invoice) { %>
+    <a class="invoice-view-link" href="/invoices/<%= order.invoice.id %>">Xem hóa đơn #<%= order.invoice.id %></a>
   <% } %>
 
   <%# ── Danh sách món đã gọi ────────────────────────────────────────────── %>
@@ -100,12 +103,12 @@
   <% } else { %>
     <p><em>Chưa gọi món nào.</em>
       <% if (order.status === 'OPEN') { %>
-        <a href="/orders/<%= order.id %>/add-items">+ Gọi món</a>
+        <a class="order-call-link" href="/orders/<%= order.id %>/add-items">+ Gọi món</a>
       <% } %>
     </p>
   <% } %>
 
-  <br /><a href="/orders">← Quay lại danh sách</a>
+  <br /><a class="page-back-link" href="/orders">← Quay lại danh sách</a>
 
   <hr />
   <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>

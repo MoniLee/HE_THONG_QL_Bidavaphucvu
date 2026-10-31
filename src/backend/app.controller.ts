@@ -42,16 +42,19 @@ export class AppController {
   // GET / → render trang chủ với thống kê nhanh
   @Get()
   @Render('index')
-  async index() {
-    const [tables, openShift, todayRevenue] = await Promise.all([
+  async index(@Query('error') error?: string) {
+    const [tables, openShift, todayRevenue, openOrders] = await Promise.all([
       this.tableService.findAll(),
       this.shiftService.findOpenShift(),
       this.revenueService.getTodayRevenue(),
+      this.orderService.findOpenOrders(),
     ]);
 
     return {
       tables,
       openShift,
+      openOrders,
+      error,
       stats: {
         totalTables: tables.length,
         occupiedTables: tables.filter((t) => t.status === 'OCCUPIED').length,
@@ -401,13 +404,17 @@ export class AppController {
 
   // GET /invoices/new?orderId=X → form thanh toán
   @Get('invoices/new')
-  @Render('invoices/new')
-  async invoiceNew(@Query('orderId') orderId: string) {
-    const [order, openShift] = await Promise.all([
-      this.orderService.findOne(Number(orderId)),
-      this.shiftService.findOpenShift(),
-    ]);
-    return { order, openShift };
+  async invoiceNew(
+    @Query('orderId') orderId: string,
+    @Res() res: Response,
+  ) {
+    const order = await this.orderService.findOne(Number(orderId));
+    if (order.invoice) {
+      return res.redirect(`/invoices/${order.invoice.id}?message=Hóa đơn đã được tạo trước đó`);
+    }
+
+    const openShift = await this.shiftService.findOpenShift();
+    return res.render('invoices/new', { order, openShift });
   }
 
   // POST /invoices → tạo hóa đơn
@@ -423,10 +430,11 @@ export class AppController {
       });
       res.redirect(`/invoices/${invoice.id}?message=Thanh toán thành công`);
     } catch (err: any) {
-      const [order, openShift] = await Promise.all([
-        this.orderService.findOne(Number(body.orderId)),
-        this.shiftService.findOpenShift(),
-      ]);
+      const order = await this.orderService.findOne(Number(body.orderId));
+      if (order.invoice) {
+        return res.redirect(`/invoices/${order.invoice.id}?message=Hóa đơn đã được tạo trước đó`);
+      }
+      const openShift = await this.shiftService.findOpenShift();
       res.render('invoices/new', { order, openShift, error: err.message });
     }
   }

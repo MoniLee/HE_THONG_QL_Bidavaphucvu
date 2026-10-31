@@ -59,6 +59,11 @@ export class InvoicesService {
 
   // ─── Tạo hóa đơn thanh toán ───────────────────────────────────────────────
   async create(dto: CreateInvoiceDto): Promise<Invoice> {
+    const existingInvoice = await this.invoiceRepo.findOne({
+      where: { order: { id: dto.orderId } },
+    });
+    if (existingInvoice) return existingInvoice;
+
     // Lấy order (phải ở trạng thái BILLED = đã đóng nhưng chưa có invoice)
     const order = await this.ordersService.findOne(dto.orderId);
 
@@ -66,14 +71,6 @@ export class InvoicesService {
       throw new BadRequestException(
         `Order #${dto.orderId} chưa được đóng. Hãy đóng order trước khi lập hóa đơn.`,
       );
-    }
-
-    // Kiểm tra order đã có invoice chưa
-    const existingInvoice = await this.invoiceRepo.findOne({
-      where: { order: { id: dto.orderId } },
-    });
-    if (existingInvoice) {
-      throw new ConflictException(`Order #${dto.orderId} đã có hóa đơn ID ${existingInvoice.id}`);
     }
 
     const discount = dto.discount ?? 0;
@@ -105,7 +102,18 @@ export class InvoicesService {
       note: dto.note ?? null,
     });
 
-    const saved = await this.invoiceRepo.save(invoice);
+    let saved: Invoice;
+    try {
+      saved = await this.invoiceRepo.save(invoice);
+    } catch (error) {
+      if ((error as { code?: string }).code === 'ER_DUP_ENTRY') {
+        const createdInvoice = await this.invoiceRepo.findOne({
+          where: { order: { id: dto.orderId } },
+        });
+        if (createdInvoice) return createdInvoice;
+      }
+      throw error;
+    }
 
     // Cộng doanh thu vào ca làm (nếu có)
     if (shift) {

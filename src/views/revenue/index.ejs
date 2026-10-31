@@ -3,7 +3,15 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Báo Cáo Doanh Thu | Quản Lý Quán Bi-Da</title>
+  <title>Báo cáo doanh thu | Bida Phục Vụ</title>
+  <link rel="stylesheet" href="/assets/portal.css" />
+  <style>
+    .report-page{max-width:1180px;margin:0 auto}.report-heading{display:flex;justify-content:space-between;align-items:flex-start;gap:16px;margin:0 auto 20px}.report-heading h1{margin:0;color:#153657;font-size:25px}.report-heading p{margin:5px 0 0;color:#71849a;font-size:13px}.report-actions{display:flex;gap:8px}.report-actions button{display:inline-flex;align-items:center;gap:7px}.report-card{background:#fff;border:1px solid #e1e8f0;border-radius:12px;box-shadow:0 3px 14px #253a500a}.report-kpis{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin-bottom:14px}.kpi{padding:17px}.kpi-label{color:#76899d;font-size:11px;font-weight:650}.kpi-value{margin-top:8px;color:#173b5c;font-size:22px;font-weight:750;letter-spacing:-.4px}.kpi-foot{margin-top:4px;color:#91a0ae;font-size:10px}.kpi-accent{display:flex;justify-content:space-between;align-items:center}.kpi-icon{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:#eaf4ff;color:#0874ce;font-size:17px}.report-filter{display:flex;align-items:end;justify-content:space-between;gap:12px;padding:14px 16px;margin-bottom:14px}.filter-fields{display:flex;align-items:end;gap:10px;flex-wrap:wrap}.filter-field label{display:block;margin-bottom:5px;color:#6a7f94;font-size:10px;font-weight:700}.filter-field select,.filter-field input{min-width:110px;min-height:36px}.report-filter .btn-primary{min-height:36px;border:1px solid #0876d5;border-radius:7px;background:#0876d5;color:#fff;padding:7px 13px;font-size:12px;font-weight:700;cursor:pointer}.report-grid{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(250px,.65fr);gap:14px;margin-bottom:14px}.report-section{padding:17px;min-width:0}.section-heading{display:flex;justify-content:space-between;align-items:center;gap:12px;margin:0 0 15px}.section-heading h2{margin:0;color:#274965;font-size:14px}.section-caption{color:#8494a4;font-size:10px}.chart{height:210px;display:flex;align-items:stretch;gap:8px;padding:14px 2px 0;border-bottom:1px solid #e7edf3;background:repeating-linear-gradient(to bottom,transparent 0,transparent 51px,#edf1f5 52px)}.chart-column{flex:1;min-width:10px;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:6px}.chart-bar-wrap{height:165px;width:100%;display:flex;align-items:flex-end;justify-content:center}.chart-bar{width:min(26px,72%);min-height:4px;border-radius:5px 5px 2px 2px;background:linear-gradient(180deg,#38a1f4,#0874ce);transition:filter .15s ease}.chart-bar:hover{filter:brightness(.9)}.chart-day{color:#8a99a8;font-size:9px}.chart-empty{height:210px;display:grid;place-items:center;color:#8393a3;font-size:12px}.payment-list{display:grid;gap:15px}.payment-item{display:grid;grid-template-columns:1fr auto;gap:6px 12px;align-items:center}.payment-label{display:flex;align-items:center;gap:8px;color:#526d84;font-size:11px}.payment-dot{width:8px;height:8px;border-radius:50%;background:#1682df}.payment-item:nth-child(2) .payment-dot{background:#20aa76}.payment-item:nth-child(3) .payment-dot{background:#efa634}.payment-value{color:#24445e;font-size:11px;font-weight:700}.payment-track{grid-column:1/-1;height:6px;border-radius:99px;background:#edf2f6;overflow:hidden}.payment-fill{height:100%;border-radius:99px;background:#1682df}.payment-item:nth-child(2) .payment-fill{background:#20aa76}.payment-item:nth-child(3) .payment-fill{background:#efa634}.report-table-wrap{overflow-x:auto}.report-table{width:100%;border-collapse:collapse;font-size:11px}.report-table th{padding:10px 11px;background:#f6f9fc;border-bottom:1px solid #e6edf3;color:#6c8195;text-align:left;font-size:10px;white-space:nowrap}.report-table td{padding:10px 11px;border-bottom:1px solid #edf1f5;color:#35516a}.report-table tr:last-child td{border-bottom:0}.report-table td:last-child,.report-table th:last-child{text-align:right}.report-table .amount{font-weight:700;color:#24435e}.shift-status{display:inline-flex;padding:3px 7px;border-radius:99px;background:#fff4df;color:#a66b12;font-size:9px;font-weight:700}.shift-status.closed{background:#eaf7f0;color:#278256}.report-note{margin-top:12px;color:#8b9aa8;font-size:10px}.report-link{color:#0874ce;text-decoration:none;font-weight:650}.report-link:hover{text-decoration:underline}.report-table-card{padding:0;overflow:hidden}.report-table-card .section-heading{padding:16px 17px 0;margin-bottom:10px}.report-table-card .report-table-wrap{padding:0 5px 7px}.report-page footer{margin-top:24px}
+    .report-grid-balanced{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+    @media(max-width:850px){.report-kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.report-grid,.report-grid-balanced{grid-template-columns:1fr}.chart{gap:4px}.report-heading h1{font-size:21px}}
+    @media(max-width:560px){.report-heading{flex-direction:column}.report-actions{width:100%}.report-actions button{flex:1;justify-content:center}.report-filter{align-items:stretch;flex-direction:column}.filter-fields{align-items:stretch}.filter-field{flex:1}.filter-field select,.filter-field input{width:100%}.report-kpis{gap:8px}.kpi{padding:13px}.kpi-value{font-size:18px}.chart{gap:2px}.chart-day{font-size:8px}.report-section{padding:13px}}
+    @media print{body{background:#fff!important;padding:0!important}.report-page{max-width:none}.report-actions,.report-filter,body>nav:first-of-type,body>nav:first-of-type+div[style]{display:none!important}.report-card{box-shadow:none;break-inside:avoid}.report-kpis{grid-template-columns:repeat(4,1fr)}}
+  </style>
 </head>
 <body>
   <nav>
@@ -17,106 +25,68 @@
     <a href="/revenue">Doanh thu</a>
   </nav>
   <%- include('../partials/auth-controls') %>
-  <hr />
+  <main class="report-page">
+    <header class="report-heading">
+      <div><h1>Báo cáo doanh thu</h1><p>Theo dõi doanh thu, thanh toán và hiệu quả từng ca làm.</p></div>
+      <div class="report-actions"><button type="button" onclick="window.print()">▤ In báo cáo</button><button type="button" onclick="downloadRevenueCsv()">↓ Tải CSV</button></div>
+    </header>
 
-  <h1>Báo Cáo Doanh Thu</h1>
+    <section class="report-kpis" aria-label="Tổng quan doanh thu">
+      <article class="report-card kpi"><div class="kpi-accent"><span class="kpi-label">Doanh thu hôm nay</span><span class="kpi-icon">₫</span></div><div class="kpi-value"><%= Number(today.totalRevenue).toLocaleString('vi-VN') %> đ</div><div class="kpi-foot"><%= today.totalInvoices %> hóa đơn đã thanh toán</div></article>
+      <article class="report-card kpi"><div class="kpi-accent"><span class="kpi-label">Doanh thu tháng <%= currentMonth %></span><span class="kpi-icon">▥</span></div><div class="kpi-value"><%= Number(monthly.totalRevenue).toLocaleString('vi-VN') %> đ</div><div class="kpi-foot"><%= monthly.totalInvoices %> hóa đơn trong tháng</div></article>
+      <article class="report-card kpi"><div class="kpi-accent"><span class="kpi-label">Doanh thu tiền bàn</span><span class="kpi-icon">▱</span></div><div class="kpi-value"><%= Number(monthly.tableRevenue).toLocaleString('vi-VN') %> đ</div><div class="kpi-foot">Theo thời lượng sử dụng bàn</div></article>
+      <article class="report-card kpi"><div class="kpi-accent"><span class="kpi-label">Doanh thu món</span><span class="kpi-icon">＋</span></div><div class="kpi-value"><%= Number(monthly.itemsRevenue).toLocaleString('vi-VN') %> đ</div><div class="kpi-foot">Đã giảm <%= Number(monthly.totalDiscount).toLocaleString('vi-VN') %> đ</div></article>
+    </section>
 
-  <%# ── Doanh thu hôm nay ──────────────────────────────────────────────── %>
-  <h2>Hôm nay</h2>
-  <table border="1" cellpadding="6" cellspacing="0">
-    <tr><th>Tổng hóa đơn</th><td><%= today.totalInvoices %></td></tr>
-    <tr><th>Tổng doanh thu</th><td><strong><%= today.totalRevenue.toLocaleString('vi-VN') %> đ</strong></td></tr>
-    <tr><th>Tiền bàn</th><td><%= today.tableRevenue.toLocaleString('vi-VN') %> đ</td></tr>
-    <tr><th>Tiền món</th><td><%= today.itemsRevenue.toLocaleString('vi-VN') %> đ</td></tr>
-    <tr><th>Tổng giảm giá</th><td><%= today.totalDiscount.toLocaleString('vi-VN') %> đ</td></tr>
-    <tr>
-      <th>Theo hình thức</th>
-      <td>
-        Tiền mặt: <%= today.byPaymentMethod.CASH.toLocaleString('vi-VN') %> đ &nbsp;|&nbsp;
-        Chuyển khoản: <%= today.byPaymentMethod.TRANSFER.toLocaleString('vi-VN') %> đ &nbsp;|&nbsp;
-        Thẻ: <%= today.byPaymentMethod.CARD.toLocaleString('vi-VN') %> đ
-      </td>
-    </tr>
-  </table>
+    <form class="report-card report-filter" method="GET" action="/revenue">
+      <div class="filter-fields">
+        <div class="filter-field"><label for="month">Tháng</label><select id="month" name="month"><% for (var m=1;m<=12;m++) { %><option value="<%= m %>" <%= m===currentMonth?'selected':'' %>><%= m %></option><% } %></select></div>
+        <div class="filter-field"><label for="year">Năm</label><input id="year" type="number" name="year" value="<%= currentYear %>" min="2020" max="2100" /></div>
+        <button class="btn-primary" type="submit">⌕ Lọc báo cáo</button>
+      </div>
+      <span class="section-caption">Đang xem tháng <%= currentMonth %>/<%= currentYear %></span>
+    </form>
 
-  <%# ── Lọc theo tháng ─────────────────────────────────────────────────── %>
-  <h2>Doanh Thu Theo Tháng</h2>
-  <form method="GET" action="/revenue">
-    Tháng:
-    <select name="month">
-      <% for (var m = 1; m <= 12; m++) { %>
-        <option value="<%= m %>" <%= m === currentMonth ? 'selected' : '' %>><%= m %></option>
-      <% } %>
-    </select>
-    Năm:
-    <input type="number" name="year" value="<%= currentYear %>" min="2020" style="width:80px" />
-    <button type="submit">Xem</button>
-  </form>
-  <br />
+    <section class="report-grid">
+      <article class="report-card report-section">
+        <div class="section-heading"><h2>Doanh thu theo ngày</h2><span class="section-caption">Tháng <%= currentMonth %>/<%= currentYear %></span></div>
+        <% if (daily && daily.length) { const maxDailyRevenue=Math.max(...daily.map(function(day){return Number(day.totalRevenue)}),1); %>
+          <div class="chart" role="img" aria-label="Biểu đồ doanh thu theo ngày trong tháng">
+            <% daily.forEach(function(day){ const percent=Math.max(4,Number(day.totalRevenue)/maxDailyRevenue*100); %><div class="chart-column" title="Ngày <%= day.date %>: <%= Number(day.totalRevenue).toLocaleString('vi-VN') %> đ"><div class="chart-bar-wrap"><div class="chart-bar" style="height:<%= percent %>%"></div></div><span class="chart-day"><%= day.date.slice(-2) %></span></div><% }); %>
+          </div>
+          <div class="report-note">Biểu đồ hiển thị các ngày có phát sinh hóa đơn.</div>
+        <% } else { %><div class="chart-empty">Chưa có doanh thu trong tháng này.</div><% } %>
+      </article>
+      <article class="report-card report-section">
+        <div class="section-heading"><h2>Phương thức thanh toán</h2><span class="section-caption">Tháng này</span></div>
+        <% const paymentTotal=Number(monthly.totalRevenue)||0; const cash=Number(monthly.byPaymentMethod.CASH)||0; const transfer=Number(monthly.byPaymentMethod.TRANSFER)||0; const card=Number(monthly.byPaymentMethod.CARD)||0; %>
+        <div class="payment-list">
+          <% [['Tiền mặt',cash],['Chuyển khoản',transfer],['Thẻ',card]].forEach(function(method){ const share=paymentTotal?Math.round(method[1]/paymentTotal*100):0; %>
+            <div class="payment-item"><div class="payment-label"><span class="payment-dot"></span><%= method[0] %></div><div class="payment-value"><%= Number(method[1]).toLocaleString('vi-VN') %> đ · <%= share %>%</div><div class="payment-track"><div class="payment-fill" style="width:<%= share %>%"></div></div></div>
+          <% }); %>
+        </div>
+      </article>
+    </section>
 
-  <% if (monthly) { %>
-    <table border="1" cellpadding="6" cellspacing="0">
-      <tr><th>Tổng hóa đơn</th><td><%= monthly.totalInvoices %></td></tr>
-      <tr><th>Tổng doanh thu</th><td><strong><%= monthly.totalRevenue.toLocaleString('vi-VN') %> đ</strong></td></tr>
-      <tr><th>Tiền bàn</th><td><%= monthly.tableRevenue.toLocaleString('vi-VN') %> đ</td></tr>
-      <tr><th>Tiền món</th><td><%= monthly.itemsRevenue.toLocaleString('vi-VN') %> đ</td></tr>
-      <tr><th>Tổng giảm giá</th><td><%= monthly.totalDiscount.toLocaleString('vi-VN') %> đ</td></tr>
-      <tr>
-        <th>Theo hình thức</th>
-        <td>
-          Tiền mặt: <%= monthly.byPaymentMethod.CASH.toLocaleString('vi-VN') %> đ &nbsp;|&nbsp;
-          Chuyển khoản: <%= monthly.byPaymentMethod.TRANSFER.toLocaleString('vi-VN') %> đ &nbsp;|&nbsp;
-          Thẻ: <%= monthly.byPaymentMethod.CARD.toLocaleString('vi-VN') %> đ
-        </td>
-      </tr>
-    </table>
-  <% } %>
-
-  <%# ── Doanh thu từng ngày trong tháng ───────────────────────────────── %>
-  <% if (daily && daily.length > 0) { %>
-    <h3>Chi tiết từng ngày — Tháng <%= currentMonth %>/<%= currentYear %></h3>
-    <table border="1" cellpadding="6" cellspacing="0">
-      <thead>
-        <tr><th>Ngày</th><th>Số hóa đơn</th><th>Doanh thu (đ)</th></tr>
-      </thead>
-      <tbody>
-        <% daily.forEach(function(d) { %>
-          <tr>
-            <td><%= d.date %></td>
-            <td><%= d.totalInvoices %></td>
-            <td><%= d.totalRevenue.toLocaleString('vi-VN') %></td>
-          </tr>
-        <% }); %>
-      </tbody>
-    </table>
-  <% } else { %>
-    <p><em>Không có dữ liệu cho tháng này.</em></p>
-  <% } %>
-
-  <%# ── Doanh thu theo ca ────────────────────────────────────────────── %>
-  <h2>Doanh Thu Theo Ca Làm</h2>
-  <% if (shifts && shifts.length > 0) { %>
-    <table border="1" cellpadding="6" cellspacing="0">
-      <thead>
-        <tr><th>Ca</th><th>Nhân viên</th><th>Bắt đầu</th><th>Kết thúc</th><th>Doanh thu</th></tr>
-      </thead>
-      <tbody>
-        <% shifts.forEach(function(s) { %>
-          <tr>
-            <td><a href="/shifts/<%= s.shiftId %>"><%= s.shiftName %></a></td>
-            <td><%= s.staffName %></td>
-            <td><%= new Date(s.startTime).toLocaleString('vi-VN') %></td>
-            <td><%= s.endTime ? new Date(s.endTime).toLocaleString('vi-VN') : '(đang mở)' %></td>
-            <td><%= s.totalRevenue.toLocaleString('vi-VN') %> đ</td>
-          </tr>
-        <% }); %>
-      </tbody>
-    </table>
-  <% } else { %>
-    <p><em>Chưa có ca làm nào.</em></p>
-  <% } %>
-
-  <hr />
-  <footer><small>Nhóm 14 &mdash; Quản Lý Quán Bi-Da &amp; Dịch Vụ &mdash; Đại Học Đông Á</small></footer>
+    <section class="report-grid report-grid-balanced">
+      <article class="report-card report-table-card">
+        <div class="section-heading"><h2>Chi tiết doanh thu theo ngày</h2><span class="section-caption"><%= daily.length %> ngày</span></div>
+        <% if (daily && daily.length) { %><div class="report-table-wrap"><table class="report-table"><thead><tr><th>Ngày</th><th>Hóa đơn</th><th>Doanh thu</th></tr></thead><tbody><% daily.forEach(function(day){ %><tr><td><%= new Date(day.date+'T00:00:00').toLocaleDateString('vi-VN') %></td><td><%= day.totalInvoices %></td><td class="amount"><%= Number(day.totalRevenue).toLocaleString('vi-VN') %> đ</td></tr><% }); %></tbody></table></div><% } else { %><div class="report-note" style="padding:12px 17px 18px">Không có dữ liệu trong khoảng thời gian đã chọn.</div><% } %>
+      </article>
+      <article class="report-card report-table-card">
+        <div class="section-heading"><h2>Doanh thu theo ca</h2><a class="report-link" href="/shifts">Quản lý ca →</a></div>
+        <% if (shifts && shifts.length) { %><div class="report-table-wrap"><table class="report-table"><thead><tr><th>Ca / nhân viên</th><th>Thời gian</th><th>Doanh thu</th></tr></thead><tbody><% shifts.forEach(function(shift){ %><tr><td><a class="report-link" href="/shifts/<%= shift.shiftId %>"><%= shift.shiftName %></a><br><span class="section-caption"><%= shift.staffName %></span></td><td><span class="shift-status <%= shift.endTime?'closed':'' %>"><%= shift.endTime?'Đã đóng':'Đang mở' %></span></td><td class="amount"><%= Number(shift.totalRevenue).toLocaleString('vi-VN') %> đ</td></tr><% }); %></tbody></table></div><% } else { %><div class="report-note" style="padding:12px 17px 18px">Chưa có ca làm nào.</div><% } %>
+      </article>
+    </section>
+    <script>
+      const revenueExportRows = <%- JSON.stringify(daily.map(function(day){return {date:day.date,totalInvoices:day.totalInvoices,totalRevenue:day.totalRevenue}})) %>;
+      function downloadRevenueCsv(){
+        const lines=[['Ngày','Số hóa đơn','Doanh thu (VND)'],...revenueExportRows.map((row)=>[row.date,row.totalInvoices,row.totalRevenue])];
+        const csv='\uFEFF'+lines.map((line)=>line.join(',')).join('\r\n');
+        const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));
+        const link=document.createElement('a');link.href=url;link.download='doanh-thu-<%= currentYear %>-<%= String(currentMonth).padStart(2,'0') %>.csv';link.click();URL.revokeObjectURL(url);
+      }
+    </script>
+  </main>
 </body>
 </html>
